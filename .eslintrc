@@ -1,0 +1,57 @@
+{
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "rules": {
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "exports": "always-multiline",
+      "imports": "always-multiline",
+      "objects": "always-multiline",
+      "functions": "ignore"
+    }],
+    "curly": ["error", "all"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "indent": ["error", 4, {"SwitchCase": 1}],
+    "linebreak-style": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}],
+    "no-use-before-define": ["error", { "variables": false }],
+    "quotes": ["error", "single"],
+    "react/forbid-prop-types": [0],
+    "react/jsx-filename-extension": [1, {
+      "extensions": [
+        ".jsx"
+      ]
+    }],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "react/jsx-one-expression-per-line": "warn",
+    "semi": ["error", "never"],
+    "valid-jsdoc": ["error", {
+      "requireReturn": false,
+      "requireReturnType": true,
+      "requireReturnDescription": false,
+      "requireParamType": true,
+      "requireParamDescription": false,
+      "prefer": {
+        "return": "returns"
+      },
+      "preferType": {
+        "Null": "null",
+        "Undefined": "undefined",
+        "Number": "number",
+        "Boolean": "boolean",
+        "String": "string",
+        "array": "Array",
+        "object": "Object"
+      }
+    }]
+  }
+}
