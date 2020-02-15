@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux'
+import { enableScreens } from 'react-native-screens';
 import configureStore from './src/redux/store'
 import { initialiseApplication } from './src/redux/actions/application.actions'
-import VersionTag from './src/components/other/VersionTag'
+import Navigation from './src/navigation'
+
+enableScreens();
 
 const store = configureStore()
 store.dispatch(initialiseApplication())
@@ -11,18 +13,7 @@ store.dispatch(initialiseApplication())
 export default function App() {
     return (
         <Provider store={store}>
-            <View style={styles.container}>
-                <VersionTag />
-            </View>
+            <Navigation />
         </Provider>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
