@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { navigationRef } from './RootNavigation'
 import SceneSplash from '../scenes/auth/sceneSplash'
 import SceneAppLoading from '../scenes/auth/sceneAppLoading'
 import SceneLogin from '../scenes/auth/sceneLogin'
@@ -11,7 +12,7 @@ import SceneGameHome from '../scenes/game/sceneGameHome'
 const Stack = createStackNavigator()
 
 const Navigation = () => (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
         <Stack.Navigator initialRouteName="Splash">
             <Stack.Screen name="Splash" component={SceneSplash} options={{ headerShown: false }} />
             <Stack.Screen name="AppLoading" component={SceneAppLoading} options={{ headerShown: false }} />
