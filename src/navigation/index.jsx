@@ -13,13 +13,13 @@ const Stack = createStackNavigator()
 
 const Navigation = () => (
     <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator initialRouteName="Splash">
-            <Stack.Screen name="Splash" component={SceneSplash} options={{ headerShown: false }} />
-            <Stack.Screen name="AppLoading" component={SceneAppLoading} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={SceneLogin} options={{ headerShown: false }} />
-            <Stack.Screen name="Home" component={SceneHome} options={{ headerShown: false }} />
-            <Stack.Screen name="Settings" component={SceneSettings} options={{ headerShown: false }} />
-            <Stack.Screen name="GameHome" component={SceneGameHome} options={{ headerShown: false }} />
+        <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Splash" component={SceneSplash} />
+            <Stack.Screen name="AppLoading" component={SceneAppLoading} />
+            <Stack.Screen name="Login" component={SceneLogin} />
+            <Stack.Screen name="Home" component={SceneHome} />
+            <Stack.Screen name="Settings" component={SceneSettings} />
+            <Stack.Screen name="GameHome" component={SceneGameHome} />
         </Stack.Navigator>
     </NavigationContainer>
 )
