@@ -48,7 +48,7 @@ const RockPaperScissorsLizardSpock = () => {
 
     return (
         <>
-            <Text>{`Score Player: ${score.player} | Opponent: ${score.opponent} | Player: ${score.draw} | `}</Text>
+            <Text>{`Score Player: ${score.player} | Opponent: ${score.opponent} | Draw: ${score.draw} | `}</Text>
 
             <Text style={{ fontSize: 42, marginTop: 20 }}>{turn}</Text>
 
