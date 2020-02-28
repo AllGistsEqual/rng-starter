@@ -2,7 +2,7 @@
   "expo": {
     "name": "RNG Starter",
     "slug": "rng-starter",
-    "version": "1.0.2",
+    "version": "0.1.2",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
