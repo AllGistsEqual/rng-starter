@@ -1,4 +1,17 @@
 {
+  "name": "rng-starter",
+  "version": "1.0.2",
+  "license": "MIT",
+  "description": "React Native Starter is a project to kick-start prototypes and game jams.",
+  "author": {
+    "name": "Konrad Abe",
+    "email": "mail@allbitsequal.com",
+    "url": "https://allbitsequal.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AllBitsEqual/rng-starter.git"
+  },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -36,6 +49,5 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0"
-  },
-  "private": true
+  }
 }
