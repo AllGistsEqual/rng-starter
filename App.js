@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 import { enableScreens } from 'react-native-screens';
@@ -15,6 +16,7 @@ export default function App() {
     return (
         <Provider store={store}>
             <PersistGate loading={(<SceneAppLoading />)} persistor={persistor}>
+                <StatusBar hidden />
                 <Navigation />
             </PersistGate>
         </Provider>
