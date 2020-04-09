@@ -10,14 +10,14 @@ const SceneSplash = ({ navigation }) => {
     useFocusEffect(
         useCallback(() => {
             const delayedNavigation = setTimeout(() => {
-                navigation.navigate('Login')
+                navigation.navigate('DataCheck')
             }, 2000)
             return () => clearTimeout(delayedNavigation)
         }, [])
     )
 
     return (
-        <ClickableScreen handlePress={() => navigation.navigate('Login')}>
+        <ClickableScreen handlePress={() => navigation.navigate('DataCheck')}>
             <DefaultPage>
                 <Image
                     style={{ width: 150, height: 120 }}
