@@ -4,9 +4,7 @@ import { StyleSheet, ScrollView, View } from 'react-native'
 
 const DefaultPage = ({ children }) => (
     <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scroller}>
-            {children}
-        </ScrollView>
+        {children}
     </View>
 )
 

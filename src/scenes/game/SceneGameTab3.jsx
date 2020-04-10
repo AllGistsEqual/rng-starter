@@ -1,15 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import DefaultPage from '../../components/DefaultPage'
-import RockPaperScissorsLizardSpock from '../../components/other/RockPaperScissorsLizardSpock'
 import BottomBar from '../../components/other/BottomBar'
 
 const SceneGameHome = () => (
     <DefaultPage>
         <View style={styles.contentBox}>
-            <Text>Game Home</Text>
-
-            <RockPaperScissorsLizardSpock />
+            <Text>Tab 3</Text>
         </View>
 
         <BottomBar />

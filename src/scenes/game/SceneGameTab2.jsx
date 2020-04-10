@@ -1,15 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import DefaultPage from '../../components/DefaultPage'
-import RockPaperScissorsLizardSpock from '../../components/other/RockPaperScissorsLizardSpock'
 import BottomBar from '../../components/other/BottomBar'
 
-const SceneGameHome = () => (
+const SceneGameTab2 = () => (
     <DefaultPage>
         <View style={styles.contentBox}>
-            <Text>Game Home</Text>
-
-            <RockPaperScissorsLizardSpock />
+            <Text>Tab 2</Text>
         </View>
 
         <BottomBar />
@@ -25,4 +22,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SceneGameHome
+export default SceneGameTab2
