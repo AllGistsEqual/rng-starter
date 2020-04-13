@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, ScrollView, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 const DefaultPage = ({ children }) => (
     <View style={styles.container}>
