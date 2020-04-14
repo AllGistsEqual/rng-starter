@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import DefaultPage from '../../components/DefaultPage'
 import { userLogout } from '../../redux/actions/user.actions'
+import VersionTag from '../../components/other/VersionTag'
 
 const SceneHome = ({ logoutUser, navigation }) => (
     <DefaultPage>
+        <VersionTag />
         <Text>
             Home
         </Text>

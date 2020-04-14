@@ -6,9 +6,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import DefaultPage from '../../components/DefaultPage'
 import useInterval from '../../hooks'
+import { initialiseApplication } from '../../redux/actions/application.actions'
 
-const SceneDataCheck = ({ isUserLoggedIn, navigation }) => {
-    const [count, setcount] = useState(0)
+const SceneDataCheck = ({ isUserLoggedIn, initApp, navigation }) => {
+    const [count, setCount] = useState(0)
+    const [timestamp] = useState(Date.now())
+
+    useEffect(() => {
+        initApp(timestamp)
+    }, [initApp, timestamp])
 
     useEffect(() => {
         const navigationTarget = isUserLoggedIn ? 'Home' : 'Login'
@@ -18,8 +24,8 @@ const SceneDataCheck = ({ isUserLoggedIn, navigation }) => {
     }, [isUserLoggedIn])
 
     useInterval(() => {
-        if (count < 200) { setcount(count + 1) }
-        if (count >= 200) { setcount(0) }
+        if (count < 200) { setCount(count + 1) }
+        if (count >= 200) { setCount(0) }
     }, 10)
 
     return (
@@ -61,6 +67,7 @@ const styles = StyleSheet.create({
 
 SceneDataCheck.propTypes = {
     isUserLoggedIn: PropTypes.bool.isRequired,
+    initApp: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
 }
 
@@ -68,4 +75,8 @@ const mapStateToProps = (state) => ({
     isUserLoggedIn: state.user.isLoggedIn,
 })
 
-export default connect(mapStateToProps)(SceneDataCheck)
+const mapDispatchToProps = (dispatch) => ({
+    initApp: (timestamp) => dispatch(initialiseApplication(timestamp)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SceneDataCheck)
