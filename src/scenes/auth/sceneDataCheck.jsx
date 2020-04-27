@@ -4,9 +4,10 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import DefaultPage from '../../components/DefaultPage'
+import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
 import useInterval from '../../hooks'
 import { initialiseApplication } from '../../redux/actions/application.actions'
+import background from '../../../assets/bg_abstract_01.jpg'
 
 const SceneDataCheck = ({ isUserLoggedIn, initApp, navigation }) => {
     const [count, setCount] = useState(0)
@@ -29,8 +30,8 @@ const SceneDataCheck = ({ isUserLoggedIn, initApp, navigation }) => {
     }, 10)
 
     return (
-        <DefaultPage>
-            <Text>
+        <BackgroundPage background={background}>
+            <Text style={styles.headline}>
                 Checking Data
             </Text>
             <View style={styles.progressBar}>
@@ -42,11 +43,15 @@ const SceneDataCheck = ({ isUserLoggedIn, initApp, navigation }) => {
                 }}
                 />
             </View>
-        </DefaultPage>
+        </BackgroundPage>
     )
 }
 
 const styles = StyleSheet.create({
+    headline: {
+        fontWeight: 'bold',
+        fontSize: 23,
+    },
     progressBar: {
         height: 20,
         marginTop: 20,

@@ -1,19 +1,27 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import DefaultPage from '../../components/DefaultPage'
+import { StyleSheet, View } from 'react-native'
+import PropTypes from 'prop-types'
 import RockPaperScissorsLizardSpock from '../../components/other/RockPaperScissorsLizardSpock'
 import BottomBar from '../../components/other/BottomBar'
+import background from '../../../assets/bg_abstract_02.jpg'
+import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
+import IconButton from '../../components/other/IconButton'
 
-const SceneGameHome = () => (
-    <DefaultPage>
+const SceneGameHome = ({ navigation }) => (
+    <BackgroundPage background={background}>
         <View style={styles.contentBox}>
-            <Text>Game Home</Text>
-
             <RockPaperScissorsLizardSpock />
+
+            <IconButton
+                icon="❌"
+                size={30}
+                customStyles={styles.buttonExit}
+                onPress={() => navigation.navigate('Home')}
+            />
         </View>
 
         <BottomBar />
-    </DefaultPage>
+    </BackgroundPage>
 )
 
 const styles = StyleSheet.create({
@@ -23,6 +31,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    buttonExit: {
+        position: 'absolute',
+        top: 15,
+        right: 15,
+    },
 })
+
+SceneGameHome.propTypes = {
+    navigation: PropTypes.object.isRequired,
+}
 
 export default SceneGameHome

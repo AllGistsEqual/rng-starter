@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Image, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { useFocusEffect } from '@react-navigation/native'
-import DefaultPage from '../../components/DefaultPage'
+import DefaultPage from '../../components/DefaultPage/DefaultPage'
 import ClickableScreen from '../../components/ClickableScreen'
 import AbeLogo from '../../../assets/AllBitsEqual_logo_light.png'
 

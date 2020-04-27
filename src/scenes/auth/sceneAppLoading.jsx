@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native'
-import DefaultPage from '../../components/DefaultPage'
+import DefaultPage from '../../components/DefaultPage/DefaultPage'
 
 const SceneAppLoading = () => (
     <DefaultPage>

@@ -1,14 +1,17 @@
 import React from 'react'
 import {
-    Button, StyleSheet, Text, View,
+    StyleSheet, Text, View,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import DefaultPage from '../../components/DefaultPage'
 import PartialSettingsGame from './partialSettingsGame'
 import PartialSettingsAbout from './partialSettingsAbout'
 import PartialSettingsAccount from './partialSettingsAccount'
+import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
+import background from '../../../assets/bg_abstract_03.jpg'
+import IconButton from '../../components/other/IconButton'
+import Button from '../../components/other/Button'
 
 const Stack = createStackNavigator()
 
@@ -53,29 +56,39 @@ const SettingsNavigation = () => (
 )
 
 const SceneSettings = ({ navigation }) => (
-    <DefaultPage>
-        <Text>
-            Settings
-        </Text>
-        <View style={styles.buttonBar}>
-            <Button
-                title="Game"
-                onPress={() => navigate('SettingsGame')}
-            />
-            <Button
-                title="Account"
-                onPress={() => navigate('SettingsAccount')}
-            />
-            <Button
-                title="About"
-                onPress={() => navigate('SettingsAbout')}
-            />
-        </View>
+    <BackgroundPage background={background}>
         <View style={styles.container}>
-            <SettingsNavigation />
+            <Text style={styles.headline}>
+                Settings
+            </Text>
+            <View style={styles.navigationBox}>
+                <SettingsNavigation />
+            </View>
+            <View style={styles.buttonBar}>
+                <Button
+                    title="Game"
+                    onPress={() => navigate('SettingsGame')}
+                />
+                <Button
+                    title="Account"
+                    onPress={() => navigate('SettingsAccount')}
+                />
+                <Button
+                    title="About"
+                    onPress={() => navigate('SettingsAbout')}
+                />
+            </View>
+            <IconButton
+                icon="❌"
+                customStyles={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 10,
+                }}
+                onPress={() => navigation.goBack()}
+            />
         </View>
-        <Button title="Back" onPress={() => navigation.goBack()} />
-    </DefaultPage>
+    </BackgroundPage>
 )
 
 const styles = StyleSheet.create({
@@ -83,10 +96,29 @@ const styles = StyleSheet.create({
         height: '80%',
         width: '90%',
         display: 'flex',
-        backgroundColor: '#ff7100',
+        backgroundColor: 'lightgray',
+        borderColor: '#000',
+        borderWidth: 3,
+        borderRadius: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headline: {
+        fontWeight: 'bold',
+        fontSize: 23,
+    },
+    navigationBox: {
+        height: '80%',
+        width: '90%',
+        display: 'flex',
+        backgroundColor: 'white',
         borderColor: '#000',
         borderWidth: 2,
         borderRadius: 5,
+        marginTop: 15,
+        marginBottom: 5,
     },
     buttonBar: {
         width: '90%',

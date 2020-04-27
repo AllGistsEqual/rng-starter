@@ -40,6 +40,7 @@ const Navigation = () => (
             initialRouteName="Splash"
             screenOptions={{
                 headerShown: false,
+                cardStyleInterpolator: forFade,
             }}
         >
             <Stack.Screen name="Splash" component={SceneSplash} />
