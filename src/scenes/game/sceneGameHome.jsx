@@ -2,10 +2,10 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 import RockPaperScissorsLizardSpock from '../../components/other/RockPaperScissorsLizardSpock'
-import BottomBar from '../../components/other/BottomBar'
+import BottomBar from '../../components/global/layout/BottomBar'
 import background from '../../../assets/bg_abstract_02.jpg'
-import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
-import IconButton from '../../components/other/IconButton'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
+import IconButton from '../../components/global/ui/IconButton'
 
 const SceneGameHome = ({ navigation }) => (
     <BackgroundPage background={background}>

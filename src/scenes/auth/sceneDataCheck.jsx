@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import useInterval from '../../hooks'
 import { initialiseApplication } from '../../redux/actions/application.actions'
 import background from '../../../assets/bg_abstract_01.jpg'

@@ -2,7 +2,7 @@ import React from 'react'
 import {
     StyleSheet, Text, View, TouchableWithoutFeedback,
 } from 'react-native'
-import * as RootNavigation from '../../navigation/RootNavigation'
+import * as RootNavigation from '../../../navigation/RootNavigation'
 
 const BottomBar = () => {
     const items = [

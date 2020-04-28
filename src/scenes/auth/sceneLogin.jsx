@@ -5,8 +5,8 @@ import {
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { userLogin } from '../../redux/actions/user.actions'
-import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
-import Button from '../../components/other/Button'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
+import Button from '../../components/global/ui/Button'
 import background from '../../../assets/bg_abstract_01.jpg'
 
 const SceneLogin = ({ loginUser, isUserLoggedIn, storedUserName }) => {

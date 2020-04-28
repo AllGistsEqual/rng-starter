@@ -2,13 +2,13 @@ import React from 'react'
 import { Image, View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from '../../components/other/Button'
+import Button from '../../components/global/ui/Button'
 import { userLogout } from '../../redux/actions/user.actions'
 import VersionTag from '../../components/other/VersionTag'
-import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import background from '../../../assets/bg_abstract_02.jpg'
 import logo from '../../../assets/game_logo.png'
-import IconButton from '../../components/other/IconButton'
+import IconButton from '../../components/global/ui/IconButton'
 
 const SceneHome = ({ logoutUser, navigation }) => (
     <BackgroundPage background={background}>

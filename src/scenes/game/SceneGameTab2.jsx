@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
-import DefaultPage from '../../components/DefaultPage/DefaultPage'
-import BottomBar from '../../components/other/BottomBar'
-import IconButton from '../../components/other/IconButton'
+import DefaultPage from '../../components/global/layout/DefaultPage'
+import BottomBar from '../../components/global/layout/BottomBar'
+import IconButton from '../../components/global/ui/IconButton'
 
 const SceneGameTab2 = ({ navigation }) => (
     <DefaultPage>

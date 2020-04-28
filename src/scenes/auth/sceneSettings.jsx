@@ -8,10 +8,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import PartialSettingsGame from './partialSettingsGame'
 import PartialSettingsAbout from './partialSettingsAbout'
 import PartialSettingsAccount from './partialSettingsAccount'
-import BackgroundPage from '../../components/DefaultPage/BackgroundPage'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import background from '../../../assets/bg_abstract_03.jpg'
-import IconButton from '../../components/other/IconButton'
-import Button from '../../components/other/Button'
+import IconButton from '../../components/global/ui/IconButton'
+import Button from '../../components/global/ui/Button'
 
 const Stack = createStackNavigator()
 

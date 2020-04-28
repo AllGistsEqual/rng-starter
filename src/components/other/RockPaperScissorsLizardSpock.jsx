@@ -3,7 +3,7 @@ import {
     Text, ImageBackground, StyleSheet,
 } from 'react-native'
 import background from '../../../assets/game_background.png'
-import IconButton from './IconButton'
+import IconButton from '../global/ui/IconButton'
 
 const RockPaperScissorsLizardSpock = () => {
     const [score, setScore] = useState({ player: 0, opponent: 0, draw: 0 })
