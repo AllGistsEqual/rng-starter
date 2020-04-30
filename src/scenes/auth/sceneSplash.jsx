@@ -3,7 +3,7 @@ import { Image, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { useFocusEffect } from '@react-navigation/native'
 import TouchableWrapper from '../../components/global/layout/TouchableWrapper'
-import DefaultPage from '../../components/DefaultPage'
+import DefaultPage from '../../components/global/layout/DefaultPage'
 import AbeLogo from '../../../assets/AllBitsEqual_logo_light.png'
 
 const SceneSplash = ({ navigation }) => {

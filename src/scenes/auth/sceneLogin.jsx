@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { Text, TextInput, Button } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import DefaultPage from '../../components/DefaultPage'
 import { userLogin } from '../../redux/actions/user.actions'
+import BackgroundPage from '../../components/global/layout/BackgroundPage'
+import backgroundImage from '../../../assets/bg_abstract_01.jpg'
 
 const SceneLogin = ({ loginUser, isUserLoggedIn, storedUserName }) => {
     const [name, setName] = useState('')
 
     return (
-        <DefaultPage>
+        <BackgroundPage background={backgroundImage}>
             <Text>
                 Login
             </Text>
@@ -27,7 +28,7 @@ const SceneLogin = ({ loginUser, isUserLoggedIn, storedUserName }) => {
 
             { isUserLoggedIn ? (<Text>{`Welcome, ${storedUserName}!`}</Text>) : undefined}
 
-        </DefaultPage>
+        </BackgroundPage>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import DefaultPage from '../../components/DefaultPage'
+import DefaultPage from '../../components/global/layout/DefaultPage'
 
 const SceneSettings = ({ navigation }) => (
     <DefaultPage>
