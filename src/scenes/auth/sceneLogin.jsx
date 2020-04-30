@@ -1,36 +1,67 @@
 import React, { useState } from 'react'
-import { Text, TextInput, Button } from 'react-native'
+import {
+    View, Text, TextInput, StyleSheet,
+} from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { userLogin } from '../../redux/actions/user.actions'
 import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import backgroundImage from '../../../assets/bg_abstract_01.jpg'
+import TextButton from '../../components/global/ui/Button'
 
 const SceneLogin = ({ loginUser, isUserLoggedIn, storedUserName }) => {
     const [name, setName] = useState('')
 
     return (
         <BackgroundPage background={backgroundImage}>
-            <Text>
-                Login
-            </Text>
-            <TextInput
-                style={{
-                    height: 50, width: 200, borderColor: 'gray', borderWidth: 3, padding: 10, margin: 10,
-                }}
-                onChangeText={(text) => setName(text)}
-                value={name}
-            />
-            <Button
-                title="Press me"
-                onPress={() => loginUser(name || 'Anon')}
-            />
+            <View style={styles.container}>
+                <Text style={styles.headline}>
+                    Enter your name here:
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => setName(text)}
+                    value={name}
+                />
+                <TextButton
+                    title="Login"
+                    type="secondary"
+                    onPress={() => loginUser(name || 'Anon')}
+                />
 
-            { isUserLoggedIn ? (<Text>{`Welcome, ${storedUserName}!`}</Text>) : undefined}
+                { isUserLoggedIn ? (<Text>{`Welcome, ${storedUserName}!`}</Text>) : undefined}
+            </View>
 
         </BackgroundPage>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        borderColor: 'gray',
+        backgroundColor: 'white',
+        borderWidth: 3,
+        padding: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headline: {
+        fontWeight: 'bold',
+        fontSize: 23,
+    },
+    input: {
+        height: 50,
+        width: 200,
+        borderColor: 'gray',
+        backgroundColor: 'lightgray',
+        borderWidth: 3,
+        borderRadius: 3,
+        padding: 10,
+        margin: 10,
+        fontSize: 18,
+    },
+})
 
 SceneLogin.defaultProps = {
     storedUserName: '',
