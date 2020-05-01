@@ -1,17 +1,10 @@
-import { applyMiddleware, compose, createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import rootReducer from './reducers/rootReducer'
 import middleware from './middleware'
 
-const initialState = {}
-
-const composeEnhancers = compose(
+const store = createStore(
+    rootReducer,
     applyMiddleware(...middleware),
 )
 
-const configureStore = () => {
-    const store = createStore(rootReducer, initialState, composeEnhancers)
-
-    return store
-}
-
-export default configureStore
+export default store
