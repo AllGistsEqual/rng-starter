@@ -1,4 +1,4 @@
-import { USER_LOGIN } from '../../actions/user.actions'
+import { USER_LOGIN, USER_LOGOUT } from '../../actions/user.actions'
 import * as RootNavigation from '../../../navigation/RootNavigation'
 
 const fakeLoginCheck = () => true // It's an older code, sir, but it checks out.
@@ -15,6 +15,13 @@ const userMiddleware = () => (next) => (action) => {
             }
             break
         }
+
+        case USER_LOGOUT: {
+            next(action)
+            RootNavigation.navigate('Login')
+            break
+        }
+
         default: {
             next(action)
         }
