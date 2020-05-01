@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { Image, View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { userLogout } from '../../redux/actions/user.actions'
@@ -8,6 +8,7 @@ import IconButton from '../../components/global/ui/IconButton'
 import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import backgroundImage from '../../../assets/bg_abstract_02.jpg'
 import logo from '../../../assets/game_logo.png'
+import VersionTag from '../../components/other/VersionTag'
 
 const SceneHome = ({ logout, navigation }) => (
     <BackgroundPage background={backgroundImage}>
@@ -32,6 +33,9 @@ const SceneHome = ({ logout, navigation }) => (
             type="primary"
             onPress={() => navigation.navigate('GameHome')}
         />
+        <View style={styles.versionTag}>
+            <VersionTag />
+        </View>
     </BackgroundPage>
 )
 
@@ -50,6 +54,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 15,
         right: 15,
+    },
+    versionTag: {
+        position: 'absolute',
+        bottom: 10,
+        left: 10,
     },
 })
 
