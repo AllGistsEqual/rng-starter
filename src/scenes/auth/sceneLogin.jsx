@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { userLogin } from '../../redux/actions/user.actions'
 import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import backgroundImage from '../../../assets/bg_abstract_01.jpg'
-import TextButton from '../../components/global/ui/Button'
+import TextButton from '../../components/global/ui/TextButton'
 
 const SceneLogin = ({ loginUser, isUserLoggedIn, storedUserName }) => {
     const [name, setName] = useState('')

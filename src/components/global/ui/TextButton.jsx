@@ -8,10 +8,10 @@ import {
 } from 'react-native'
 
 const TextButton = ({
-                        title,
-                        onPress,
-                        type,
-                    }) => (
+    title,
+    onPress,
+    type,
+}) => (
     <TouchableOpacity onPress={() => onPress()}>
         <View style={{ ...styles.baseButton, ...styles[`${type}Button`] }}>
             <Text style={{ ...styles.baseText, ...styles[`${type}Text`] }}>
