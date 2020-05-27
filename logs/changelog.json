@@ -1,0 +1,70 @@
+{
+  "Description": "This changelog.json tries to adhere to the best practices of others. \n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). \nAs soon as the first stable release is published, this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).",
+  "Unreleased": [
+    "make great games",
+    "example setups",
+    "ad separate custom UI library rng-utils"
+  ],
+  "Changelog": [
+    {
+      "version": "0.2.3",
+      "date": "2020-05-11",
+      "author": "AllBitsEqual",
+      "type": "minor",
+      "comment": "Improved UX and UI and made stored data persistent",
+      "Breaking": [
+        {
+          "fix": "br_0-2-3",
+          "comment": "restructured stored user data and introduced change to user store to demonstrate feature"
+        }
+      ]
+    },
+    {
+      "version": "0.2.2",
+      "date": "2020-05-11",
+      "author": "AllBitsEqual",
+      "type": "minor",
+      "comment": "Improved UX and UI and made stored data persistent",
+      "Changed": [
+        "restructured stored user data"
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "date": "2020-05-01",
+      "author": "AllBitsEqual",
+      "type": "minor",
+      "comment": "Improved UX and UI and made stored data persistent",
+      "Added": [
+        "persistend redux store"
+      ],
+      "Changed": [
+        "UX and UI improvements for existing screens",
+        "made the game look nicer"
+      ]
+    },
+    {
+      "version": "0.1.3",
+      "date": "2020-04-28",
+      "author": "AllBitsEqual",
+      "type": "fix",
+      "comment": "Minor changes and cleanup",
+      "Fixed": [
+        "code cleanup"
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "date": "2020-02-28",
+      "author": "AllBitsEqual",
+      "type": "minor",
+      "comment": "Initial release after first tutorial. Project setup, react, redux and navigation basics.",
+      "Added": [
+        "expo / react project",
+        "redux",
+        "React navigation",
+        "simple game placeholder"
+      ]
+    }
+  ]
+}

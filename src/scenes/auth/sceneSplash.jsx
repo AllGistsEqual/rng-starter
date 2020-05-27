@@ -8,7 +8,7 @@ import DefaultPage from '../../components/global/layout/DefaultPage'
 import AbeLogo from '../../../assets/AllBitsEqual_logo_light.png'
 
 const SceneSplash = ({ isUserLoggedIn, navigation }) => {
-    const navigationTarget = isUserLoggedIn ? 'Home' : 'Login'
+    const navigationTarget = 'DataCheck'
 
     useFocusEffect(
         useCallback(() => {

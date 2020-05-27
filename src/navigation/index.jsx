@@ -9,6 +9,7 @@ import SceneLogin from '../scenes/auth/sceneLogin'
 import SceneHome from '../scenes/auth/sceneHome'
 import SceneSettings from '../scenes/auth/sceneSettings'
 import SceneGameHome from '../scenes/game/sceneGameHome'
+import SceneDataCheck from '../scenes/auth/sceneDataCheck'
 
 const Stack = createStackNavigator()
 
@@ -26,6 +27,7 @@ const Navigation = ({ isUserLoggedIn }) => (
                 // Auth Stack
                 <>
                     <Stack.Screen name="Splash" component={SceneSplash} />
+                    <Stack.Screen name="DataCheck" component={SceneDataCheck} />
                     <Stack.Screen name="Login" component={SceneLogin} />
                 </>
             )}
