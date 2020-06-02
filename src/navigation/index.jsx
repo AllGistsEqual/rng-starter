@@ -9,6 +9,7 @@ import SceneLogin from '../scenes/auth/sceneLogin'
 import SceneHome from '../scenes/auth/sceneHome'
 import SceneSettings from '../scenes/auth/sceneSettings'
 import SceneGameHome from '../scenes/game/sceneGameHome'
+import SceneGridTest from '../scenes/game/sceneGridTest'
 
 const Stack = createStackNavigator()
 
@@ -18,6 +19,7 @@ const Navigation = ({ isUserLoggedIn }) => (
             {isUserLoggedIn ? (
                 // App Stack
                 <>
+                    <Stack.Screen name="GridTest" component={SceneGridTest} />
                     <Stack.Screen name="Home" component={SceneHome} />
                     <Stack.Screen name="Settings" component={SceneSettings} />
                     <Stack.Screen name="GameHome" component={SceneGameHome} />
