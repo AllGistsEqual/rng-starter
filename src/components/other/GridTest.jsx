@@ -1,14 +1,7 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import Cell from './Cell'
-
-const gridPainter = (grid) => grid
-    .map(
-        (col, colIndex) => col.map(
-            (cell, rowIndex) => ({ cell, x: colIndex, y: rowIndex })
-        )
-    )
-    .flat()
+import TextButton from '../global/ui/TextButton'
 
 const cellWidth = 50
 const cellHeight = 50
@@ -16,6 +9,33 @@ const gridCols = 7
 const gridRows = 10
 const gridBombs = 9
 const borderWidth = 1
+
+const targetBombCount = Math.min(gridCols * gridRows - 5, gridBombs)
+
+const getStraightNeighbours = (x, y) => [
+    [x + 0, y - 1],
+    [x + 0, y + 1],
+    [x - 1, y],
+    [x + 1, y],
+]
+const getDiagonalNeighbours = (x, y) => [
+    [x - 1, y - 1],
+    [x + 1, y - 1],
+    [x - 1, y + 1],
+    [x + 1, y + 1],
+]
+
+/* const cellValueLegend = {
+    '0': 'hidden empty cell, no adjacent bombs',
+    '1-8': 'hidden empty cell with n adjacent bombs',
+    '9': 'hidden bomb',
+    '10': 'visible empty cell, no adjacent bombs',
+    '11-18': 'visible empty cell with n adjacent bombs',
+    '19': 'visible bomb',
+    '20': 'flagged empty cell, no adjacent bombs',
+    '21-28': 'flagged empty cell with n adjacent bombs',
+    '29': 'flagged bomb',
+} */
 
 const createBoard = (cols, rows) => {
     const board = []
@@ -34,16 +54,13 @@ const getRandomCell = (colLength, rowLength) => ([
     Math.floor(Math.random() * Math.floor(rowLength)),
 ])
 
-const addBombs = (grid, cols, rows, bombs) => {
+const addBombs = (grid, cols, rows) => {
     const newGrid = copyGrid(grid)
-    const safeBombCount = cols * rows - 5
-    const targetBombCount = Math.min(safeBombCount, bombs)
-
     let bombCount = 0
     do {
         const [x, y] = getRandomCell(cols, rows)
         if (getValueOfCell(newGrid, x, y) === 0) {
-            newGrid[x][y] = 10
+            newGrid[x][y] = 9
             bombCount += 1
         }
     } while (bombCount < targetBombCount)
@@ -53,19 +70,13 @@ const addBombs = (grid, cols, rows, bombs) => {
 const oneUpNeighbours = (grid, x, y) => {
     const newGrid = copyGrid(grid)
     const neighbours = [
-        [x - 1, y - 1],
-        [x + 0, y - 1],
-        [x + 1, y - 1],
-        [x - 1, y],
-        [x + 1, y],
-        [x - 1, y + 1],
-        [x + 0, y + 1],
-        [x + 1, y + 1],
+        ...getStraightNeighbours(x, y),
+        ...getDiagonalNeighbours(x, y),
     ]
     neighbours.forEach(([nX, nY]) => {
         if (newGrid[nX]) {
             if (newGrid[nX][nY] !== undefined) {
-                if (newGrid[nX][nY] !== 10) {
+                if (newGrid[nX][nY] !== 9) {
                     newGrid[nX][nY] += 1
                 }
             }
@@ -77,20 +88,71 @@ const oneUpNeighbours = (grid, x, y) => {
 const addNeighbourCount = (grid) => {
     let newGrid = copyGrid(grid)
     newGrid.forEach((col, colIndex) => col.forEach((cell, rowIndex) => {
-        if (cell === 10) { newGrid = oneUpNeighbours(newGrid, colIndex, rowIndex) }
+        if (cell === 9) { newGrid = oneUpNeighbours(newGrid, colIndex, rowIndex) }
     }))
     return newGrid
 }
 
-const GridTest = () => {
+const setupBoard = () => {
     const grid = createBoard(gridCols, gridRows)
     const riggedGrid = addBombs(grid, gridCols, gridRows, gridBombs)
-    const countedGrid = addNeighbourCount(riggedGrid)
+    return addNeighbourCount(riggedGrid)
+}
+
+const updateBoard = (grid, changedCells) => {
+    const newGrid = copyGrid(grid)
+
+    changedCells.forEach(({ x, y, cell }) => { newGrid[x][y] = cell })
+
+    return newGrid
+}
+
+const allHiddenCleared = (grid) => {
+    let hiddenEmpty = 0
+    grid.forEach((col) => col.forEach((cell) => {
+        if (cell < 9 || (cell > 19 && cell < 29)) { hiddenEmpty += 1 }
+    }))
+
+    return hiddenEmpty === 0
+}
+
+const gridPainter = (grid) => grid
+    .map((col, colIndex) => col
+        .map(
+            (cell, rowIndex) => ({ cell, x: colIndex, y: rowIndex })
+        ))
+    .flat()
+
+const GridTest = () => {
+    const [win, setWin] = useState(false)
+    const [lose, setLose] = useState(false)
+    const [turn, setTurn] = useState(0)
+    const [cheating, setCheating] = useState(0)
+    const [board, setBoard] = useState(setupBoard())
+
+    const updateCell = (changedCell) => {
+        if (win || lose) { return false }
+        setTurn(turn + 1)
+        const newBoard = updateBoard(board, [changedCell])
+        setBoard(newBoard)
+        if (changedCell.cell === 19) {
+            setLose(true)
+        }
+        if (allHiddenCleared(newBoard)) {
+            setWin(true)
+        }
+        return true
+    }
 
     return (
         <>
-            <View style={styles.gridBackground}>
-                {gridPainter(countedGrid).map(({
+            <Text>{`Bombs: ${targetBombCount} // Turn: ${turn}`}</Text>
+            <View style={{
+                ...styles.gridBackground,
+                borderColor: cheating > 0 ? 'magenta' : '#000',
+            }}
+            >
+                {gridPainter(board).map(({
                     cell,
                     x,
                     y,
@@ -102,9 +164,18 @@ const GridTest = () => {
                         y={y}
                         width={cellWidth}
                         height={cellHeight}
+                        cheat={!!(cheating % 2)}
+                        updateCell={(changedCell) => updateCell(changedCell)}
                     />
                 ))}
             </View>
+            <TextButton
+                title="🕵️ Cheat this 🕵️"
+                type="default"
+                onPress={() => setCheating(cheating + 1)}
+            />
+            {lose ? (<Text>YOU LOST!</Text>) : null}
+            {win ? (<Text>{`YOU FOUND ALL THE BOMBS!${cheating > 0 ? ' YOU CHEAT!' : ''}`}</Text>) : null}
         </>
     )
 }
@@ -118,7 +189,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'magenta',
         position: 'relative',
         borderWidth,
-        borderColor: '#000',
     },
 })
 
