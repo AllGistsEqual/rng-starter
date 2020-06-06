@@ -102,8 +102,55 @@ const setupBoard = () => {
 const updateBoard = (grid, changedCells) => {
     const newGrid = copyGrid(grid)
 
-    changedCells.forEach(({ x, y, cell }) => { newGrid[x][y] = cell })
+    changedCells.forEach(({ x, y, cell }) => {
+        newGrid[x][y] = cell
+    })
 
+    return newGrid
+}
+
+const findConnectedEmptyCells = (grid, x, y) => {
+    const newGrid = copyGrid(grid)
+    const markedCells = [[x, y]]
+
+    /*
+     * loop while there are remaining cells to check
+     */
+    while (markedCells.length) {
+        let reachLeft = false
+        let reachRight = false
+
+        const current = markedCells.shift()
+        let [curX, curY] = current
+
+        /*
+         * move top until you hit an obstacle
+         */
+        while (getValueOfCell(newGrid, curX, curY - 1) === 0) {
+            curY += -1
+        }
+
+        /*
+         * move down until you hit an obstacle and mark neighbours
+         */
+        while (getValueOfCell(newGrid, curX, curY) === 0) {
+            newGrid[curX][curY] += 10
+            if (!reachLeft) {
+                if (curX - 1 >= 0 && newGrid[curX - 1][curY] === 0) {
+                    markedCells.push([curX - 1, curY])
+                    reachLeft = true
+                }
+            } else { reachLeft = false }
+
+            if (!reachRight) {
+                if (curX + 1 < newGrid.length && newGrid[curX + 1][curY] === 0) {
+                    markedCells.push([curX + 1, curY])
+                    reachRight = true
+                }
+            } else { reachRight = false }
+            curY += 1
+        }
+    }
     return newGrid
 }
 
@@ -132,9 +179,16 @@ const GridTest = () => {
 
     const updateCell = (changedCell) => {
         if (win || lose) { return false }
+        let newBoard
         setTurn(turn + 1)
-        const newBoard = updateBoard(board, [changedCell])
+        if (changedCell.cell === 10) {
+            newBoard = findConnectedEmptyCells(board, changedCell.x, changedCell.y)
+        } else {
+            newBoard = updateBoard(board, [changedCell])
+        }
+
         setBoard(newBoard)
+
         if (changedCell.cell === 19) {
             setLose(true)
         }
