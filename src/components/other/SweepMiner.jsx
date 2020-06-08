@@ -1,29 +1,17 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
+import { StyleSheet, Text, View } from 'react-native'
+import {
+    createBoard,
+    gridPainter,
+    copyGrid,
+    getValueOfCell,
+    updateBoard,
+    getRandomCell,
+    getStraightNeighbours,
+    getDiagonalNeighbours,
+} from './Grid'
 import Cell from './Cell'
-import TextButton from '../global/ui/TextButton'
-
-const cellWidth = 50
-const cellHeight = 50
-const gridCols = 7
-const gridRows = 10
-const gridBombs = 9
-const borderWidth = 1
-
-const targetBombCount = Math.min(Math.floor(gridCols * gridRows * 0.33), gridBombs)
-
-const getStraightNeighbours = (x, y) => [
-    [x + 0, y - 1],
-    [x + 0, y + 1],
-    [x - 1, y],
-    [x + 1, y],
-]
-const getDiagonalNeighbours = (x, y) => [
-    [x - 1, y - 1],
-    [x + 1, y - 1],
-    [x - 1, y + 1],
-    [x + 1, y + 1],
-]
 
 /* const cellValueLegend = {
     '0': 'hidden empty cell, no adjacent bombs',
@@ -37,24 +25,17 @@ const getDiagonalNeighbours = (x, y) => [
     '29': 'flagged bomb',
 } */
 
-const createBoard = (cols, rows) => {
-    const board = []
-    for (let col = 0; col < cols; col++) {
-        board.push(Array(rows).fill(0))
-    }
-    return board
+const cellWidth = 50
+const cellHeight = 50
+const borderWidth = 1
+
+const setupBoard = (cols, rows, bombs) => {
+    const grid = createBoard(cols, rows)
+    const riggedGrid = addBombs(grid, cols, rows, bombs)
+    return addNeighbourCount(riggedGrid)
 }
 
-const copyGrid = (grid) => grid.map((col) => [...col])
-
-const getValueOfCell = (grid, x, y) => grid[x][y]
-
-const getRandomCell = (colLength, rowLength) => ([
-    Math.floor(Math.random() * Math.floor(colLength)),
-    Math.floor(Math.random() * Math.floor(rowLength)),
-])
-
-const addBombs = (grid, cols, rows) => {
+const addBombs = (grid, cols, rows, bombs) => {
     const newGrid = copyGrid(grid)
     let bombCount = 0
     do {
@@ -63,7 +44,7 @@ const addBombs = (grid, cols, rows) => {
             newGrid[x][y] = 9
             bombCount += 1
         }
-    } while (bombCount < targetBombCount)
+    } while (bombCount < bombs)
     return newGrid
 }
 
@@ -90,22 +71,6 @@ const addNeighbourCount = (grid) => {
     newGrid.forEach((col, colIndex) => col.forEach((cell, rowIndex) => {
         if (cell === 9) { newGrid = oneUpNeighbours(newGrid, colIndex, rowIndex) }
     }))
-    return newGrid
-}
-
-const setupBoard = () => {
-    const grid = createBoard(gridCols, gridRows)
-    const riggedGrid = addBombs(grid, gridCols, gridRows, gridBombs)
-    return addNeighbourCount(riggedGrid)
-}
-
-const updateBoard = (grid, changedCells) => {
-    const newGrid = copyGrid(grid)
-
-    changedCells.forEach(({ x, y, cell }) => {
-        newGrid[x][y] = cell
-    })
-
     return newGrid
 }
 
@@ -201,19 +166,16 @@ const allHiddenCleared = (grid) => {
     return hiddenEmpty === 0
 }
 
-const gridPainter = (grid) => grid
-    .map((col, colIndex) => col
-        .map(
-            (cell, rowIndex) => ({ cell, x: colIndex, y: rowIndex })
-        ))
-    .flat()
-
-const GridTest = () => {
+const SweepMiner = ({
+    gridCols,
+    gridRows,
+    bombs,
+    cheating,
+}) => {
+    const [board, setBoard] = useState(setupBoard(gridCols, gridRows, bombs))
     const [win, setWin] = useState(false)
     const [lose, setLose] = useState(false)
     const [turn, setTurn] = useState(0)
-    const [cheating, setCheating] = useState(0)
-    const [board, setBoard] = useState(setupBoard())
 
     const updateCell = (changedCell) => {
         if (win || lose) { return false }
@@ -238,10 +200,12 @@ const GridTest = () => {
 
     return (
         <>
-            <Text>{`Bombs: ${targetBombCount} // Turn: ${turn}`}</Text>
+            <Text>{`Bombs: ${bombs} // Turn: ${turn}`}</Text>
             <View style={{
                 ...styles.gridBackground,
                 borderColor: cheating > 0 ? 'magenta' : '#000',
+                width: gridCols * cellWidth + borderWidth * 2,
+                height: gridRows * cellHeight + borderWidth * 2,
             }}
             >
                 {gridPainter(board).map(({
@@ -261,27 +225,35 @@ const GridTest = () => {
                     />
                 ))}
             </View>
-            <TextButton
-                title="🕵️ Cheat this 🕵️"
-                type="default"
-                onPress={() => setCheating(cheating + 1)}
-            />
+
             {lose ? (<Text>YOU LOST!</Text>) : null}
-            {win ? (<Text>{`YOU FOUND ALL THE BOMBS!${cheating > 0 ? ' YOU CHEAT!' : ''}`}</Text>) : null}
+
+            {win
+                ? (
+                    <Text>
+                        {`YOU FOUND ALL THE BOMBS!${cheating > 0 ? ' YOU CHEAT!' : ''}`}
+                    </Text>
+                )
+                : null}
         </>
     )
 }
 
+SweepMiner.propTypes = {
+    gridCols: PropTypes.number.isRequired,
+    gridRows: PropTypes.number.isRequired,
+    bombs: PropTypes.number.isRequired,
+    cheating: PropTypes.number.isRequired,
+}
+
 const styles = StyleSheet.create({
     gridBackground: {
-        width: gridCols * cellWidth + borderWidth * 2,
-        height: gridRows * cellHeight + borderWidth * 2,
         resizeMode: 'cover',
         justifyContent: 'center',
-        backgroundColor: 'magenta',
+        backgroundColor: '#ccc',
         position: 'relative',
         borderWidth,
     },
 })
 
-export default GridTest
+export default SweepMiner
