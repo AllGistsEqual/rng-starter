@@ -10,7 +10,7 @@ const gridRows = 10
 const gridBombs = 9
 const borderWidth = 1
 
-const targetBombCount = Math.min(gridCols * gridRows - 5, gridBombs)
+const targetBombCount = Math.min(Math.floor(gridCols * gridRows * 0.33), gridBombs)
 
 const getStraightNeighbours = (x, y) => [
     [x + 0, y - 1],
@@ -109,19 +109,37 @@ const updateBoard = (grid, changedCells) => {
     return newGrid
 }
 
+const checkAdjacentCells = (grid, cells) => {
+    const newGrid = copyGrid(grid);
+    [...cells].forEach((entry) => {
+        const [x, y] = entry.split(',')
+        if (
+            y >= 0
+            && x >= 0
+            && y < newGrid[0].length
+            && x < newGrid.length
+            && newGrid[x][y] < 9
+            && newGrid[x][y] !== 0) {
+            newGrid[x][y] += 10
+        }
+    })
+    return newGrid
+}
+
 const findConnectedEmptyCells = (grid, x, y) => {
     const newGrid = copyGrid(grid)
     const markedCells = [[x, y]]
+    const adjacentCells = new Set()
 
     /*
      * loop while there are remaining cells to check
      */
     while (markedCells.length) {
-        let reachLeft = false
-        let reachRight = false
+        let reachLeft = true
+        let reachRight = true
 
         const current = markedCells.shift()
-        let [curX, curY] = current
+        let [curX, curY] = current // eslint-disable-line prefer-const
 
         /*
          * move top until you hit an obstacle
@@ -129,29 +147,49 @@ const findConnectedEmptyCells = (grid, x, y) => {
         while (getValueOfCell(newGrid, curX, curY - 1) === 0) {
             curY += -1
         }
+        adjacentCells
+            .add(`${curX - 1},${curY - 1}`)
+            .add(`${curX},${curY - 1}`)
+            .add(`${curX + 1},${curY - 1}`)
 
         /*
          * move down until you hit an obstacle and mark neighbours
          */
         while (getValueOfCell(newGrid, curX, curY) === 0) {
             newGrid[curX][curY] += 10
-            if (!reachLeft) {
-                if (curX - 1 >= 0 && newGrid[curX - 1][curY] === 0) {
+            if (curX - 1 >= 0) {
+                const leftAdjacent = newGrid[curX - 1][curY]
+                // check left side for hidden numbers
+                if (leftAdjacent < 9 && leftAdjacent !== 0) {
+                    adjacentCells.add(`${curX - 1},${curY}`)
+                }
+                // check left side for empty cells for new column
+                if (reachLeft && leftAdjacent === 0) {
                     markedCells.push([curX - 1, curY])
-                    reachLeft = true
-                }
-            } else { reachLeft = false }
+                    reachLeft = false
+                } else { reachLeft = true }
+            }
 
-            if (!reachRight) {
-                if (curX + 1 < newGrid.length && newGrid[curX + 1][curY] === 0) {
-                    markedCells.push([curX + 1, curY])
-                    reachRight = true
+            if (curX + 1 < newGrid.length) {
+                const rightAdjacent = newGrid[curX + 1][curY]
+                // check right side for hidden numbers
+                if (rightAdjacent < 9 && rightAdjacent !== 0) {
+                    adjacentCells.add(`${curX + 1},${curY}`)
                 }
-            } else { reachRight = false }
+                // check left side for empty cells for new column
+                if (reachRight && rightAdjacent === 0) {
+                    markedCells.push([curX + 1, curY])
+                    reachRight = false
+                } else { reachRight = true }
+            }
             curY += 1
         }
+        adjacentCells
+            .add(`${curX - 1},${curY}`)
+            .add(`${curX},${curY}`)
+            .add(`${curX + 1},${curY}`)
     }
-    return newGrid
+    return checkAdjacentCells(newGrid, adjacentCells)
 }
 
 const allHiddenCleared = (grid) => {
