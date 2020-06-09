@@ -1,47 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import BackgroundPage from '../../components/global/layout/BackgroundPage'
 import IconButton from '../../components/global/ui/IconButton'
 import backgroundImage from '../../../assets/bg_abstract_02.jpg'
-import SweepMiner from '../../components/other/SweepMiner'
-import TextButton from '../../components/global/ui/TextButton'
+import MagicGatherer from '../../components/other/MagicGatherer'
 
-const gridCols = 7
-const gridRows = 10
-const gridBombs = 9
+const gridCols = 5
+const gridRows = 5
 
-const targetBombCount = Math.min(Math.floor(gridCols * gridRows * 0.33), gridBombs)
+const SceneGridTest = ({ navigation }) => (
+    <BackgroundPage background={backgroundImage}>
+        <View style={styles.contentBox}>
+            <MagicGatherer
+                gridCols={gridCols}
+                gridRows={gridRows}
+            />
 
-const SceneGridTest = ({ navigation }) => {
-    const [cheating, setCheating] = useState(0)
-
-    return (
-        <BackgroundPage background={backgroundImage}>
-            <View style={styles.contentBox}>
-                <SweepMiner
-                    gridCols={gridCols}
-                    gridRows={gridRows}
-                    bombs={targetBombCount}
-                    cheating={cheating}
-                />
-
-                <TextButton
-                    title="🕵️ Cheat this 🕵️"
-                    type="default"
-                    onPress={() => setCheating(cheating + 1)}
-                />
-
-                <IconButton
-                    icon="❌"
-                    size={30}
-                    customStyles={styles.buttonExit}
-                    onPress={() => navigation.navigate('Home')}
-                />
-            </View>
-        </BackgroundPage>
-    )
-}
+            <IconButton
+                icon="❌"
+                size={30}
+                customStyles={styles.buttonExit}
+                onPress={() => navigation.navigate('Home')}
+            />
+        </View>
+    </BackgroundPage>
+)
 
 const styles = StyleSheet.create({
     contentBox: {
