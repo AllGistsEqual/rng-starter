@@ -16,6 +16,8 @@ const deviceList = [
 const GtmToolbox = ({
     cellWidth,
     cellHeight,
+    handleDrag,
+    handleDrop,
 }) => (
     <View style={styles.background}>
         {deviceList.map(({ label, color }) => (
@@ -25,14 +27,17 @@ const GtmToolbox = ({
                 color={color}
                 width={cellWidth}
                 height={cellHeight}
+                handleDrag={handleDrag}
+                handleDrop={handleDrop}
             />
         ))}
     </View>
 )
-
 GtmToolbox.propTypes = {
     cellWidth: PropTypes.number.isRequired,
     cellHeight: PropTypes.number.isRequired,
+    handleDrag: PropTypes.func.isRequired,
+    handleDrop: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({

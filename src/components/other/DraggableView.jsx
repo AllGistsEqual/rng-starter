@@ -8,17 +8,55 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 
+const dragHandleOffset = { x: 0, y: 42 }
+
 const DraggableView = ({
     width,
     height,
     label,
     color,
+    handleDrag,
+    handleDrop,
 }) => {
     const pan = useRef(new Animated.ValueXY()).current
     const [gestureValue, setGestureValue] = useState({ x: 0, y: 0 })
     const [dragging, setDragging] = useState(false)
-    const [dropable, setDropable] = useState(false)
+    const [droppable, setDroppable] = useState(false)
     const [stateStyle, setStateStyle] = useState({})
+
+    const panGrant = () => {
+        setDragging(true)
+        pan.setOffset({
+            x: pan.x._value, // eslint-disable-line no-underscore-dangle
+            y: pan.y._value - dragHandleOffset.y, // eslint-disable-line no-underscore-dangle
+        })
+    }
+
+    const panMove = (evt, gestureState) => {
+        handleDrag({
+            x: gestureState.moveX,
+            y: gestureState.moveY,
+        })
+        if (dragging === false) { setDroppable(true) }
+        setGestureValue({
+            x: gestureState.dx,
+            y: gestureState.dy - dragHandleOffset.y,
+        })
+    }
+
+    const panRelease = (evt, gestureState) => {
+        handleDrop({
+            x: gestureState.moveX,
+            y: gestureState.moveY,
+        })
+        setDragging(false)
+        setDroppable(false)
+        pan.flattenOffset()
+        setGestureValue({
+            x: 0,
+            y: 0,
+        })
+    }
 
     const panResponder = useRef(
         PanResponder.create({
@@ -27,38 +65,18 @@ const DraggableView = ({
             onMoveShouldSetPanResponder: () => true,
             onMoveShouldSetPanResponderCapture: () => true,
             onPanResponderTerminationRequest: () => true,
-            onPanResponderGrant: () => {
-                setDragging(true)
-                pan.setOffset({
-                    x: pan.x._value, // eslint-disable-line no-underscore-dangle
-                    y: pan.y._value, // eslint-disable-line no-underscore-dangle
-                })
-            },
-            onPanResponderMove: (evt, gestureState) => {
-                if (dragging === false) { setDropable(true) }
-                setGestureValue({
-                    x: gestureState.dx,
-                    y: gestureState.dy,
-                })
-            },
-            onPanResponderRelease: () => {
-                setDragging(false)
-                setDropable(false)
-                pan.flattenOffset()
-                setGestureValue({
-                    x: 0,
-                    y: 0,
-                })
-            },
+            onPanResponderGrant: () => panGrant(),
+            onPanResponderMove: (evt, gestureState) => panMove(evt, gestureState),
+            onPanResponderRelease: (evt, gestureState) => panRelease(evt, gestureState),
         })
     ).current
 
     useEffect(() => {
         const draggingStyles = dragging ? styles.deviceDragging : {}
-        const dropableStyles = dropable ? styles.deviceDropable : {}
+        const droppableStyles = droppable ? styles.deviceDroppable : {}
         setStateStyle({
             ...draggingStyles,
-            ...dropableStyles,
+            ...droppableStyles,
         })
     }, [dragging])
 
@@ -91,6 +109,8 @@ DraggableView.propTypes = {
     height: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
+    handleDrag: PropTypes.func.isRequired,
+    handleDrop: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -107,7 +127,7 @@ const styles = StyleSheet.create({
         borderColor: '#e91e63',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
     },
-    deviceDropable: {
+    deviceDroppable: {
         borderWidth: 2,
         borderColor: '#008a12',
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
