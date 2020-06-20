@@ -1,7 +1,7 @@
-export const createBoard = (cols, rows) => {
+export const createBoard = (cols, rows, content = 0) => {
     const board = []
     for (let col = 0; col < cols; col++) {
-        board.push(Array(rows).fill(0))
+        board.push(Array(rows).fill(content))
     }
     return board
 }

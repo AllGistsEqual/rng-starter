@@ -4,13 +4,13 @@ import {
     StyleSheet,
     View,
 } from 'react-native'
-import DraggableView from './DraggableView'
+import DraggableBox from './DraggableBox'
 
 const deviceList = [
-    { label: '[S]', color: '#f62dff' },
-    { label: '[M]', color: '#1b5e7a' },
-    { label: '[X]', color: '#24ffc0' },
-    { label: '[E]', color: '#ffbb15' },
+    { label: '[S]', color: '#f62dff', id: 'tb_drag_source' },
+    { label: '[M]', color: '#1b5e7a', id: 'tb_drag_mixer' },
+    { label: '[X]', color: '#24ffc0', id: 'tb_drag_exporter' },
+    { label: '[E]', color: '#ffbb15', id: 'tb_drag_equaliser' },
 ]
 
 const GtmToolbox = ({
@@ -18,17 +18,20 @@ const GtmToolbox = ({
     cellHeight,
     handleDrag,
     handleDrop,
+    mob,
 }) => (
     <View style={styles.background}>
-        {deviceList.map(({ label, color }) => (
-            <DraggableView
-                key={label}
+        {deviceList.map(({ label, color, id }) => (
+            <DraggableBox
+                key={id}
+                id={id}
                 label={label}
                 color={color}
                 width={cellWidth}
                 height={cellHeight}
                 handleDrag={handleDrag}
                 handleDrop={handleDrop}
+                mob={mob}
             />
         ))}
     </View>
@@ -38,6 +41,7 @@ GtmToolbox.propTypes = {
     cellHeight: PropTypes.number.isRequired,
     handleDrag: PropTypes.func.isRequired,
     handleDrop: PropTypes.func.isRequired,
+    mob: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
