@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     label: {
-        fontSize: 18,
+        fontSize: 24,
     },
 })
 

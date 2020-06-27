@@ -10,9 +10,12 @@ export default class DraggableBox extends Component {
         this.translateY = new Animated.Value(0)
         this.lastOffset = { x: 0, y: 0 }
 
-        this.dragInitHandler = (event) => {}
+        this.dragInitHandler = () => {
+            const { handleDragStart, id } = this.props
+            handleDragStart(id)
+        }
 
-        this.dragStartHandler = (event) => {}
+        this.dragStartHandler = () => {}
 
         this.dragMoveHandler = (event) => {
             const { handleDrag, id } = this.props
@@ -51,8 +54,8 @@ export default class DraggableBox extends Component {
     }
 
     onHandlerStateChange = (event) => {
-        if (event.nativeEvent.oldState === State.UNDETERMINED) { this.dragInitHandler(event) }
-        if (event.nativeEvent.oldState === State.BEGAN) { this.dragStartHandler(event) }
+        if (event.nativeEvent.oldState === State.UNDETERMINED) { this.dragInitHandler() }
+        if (event.nativeEvent.oldState === State.BEGAN) { this.dragStartHandler() }
         if (event.nativeEvent.oldState === State.ACTIVE) { this.dragStopHandler(event) }
     }
 
@@ -66,6 +69,7 @@ export default class DraggableBox extends Component {
         } = this.props
         return (
             <PanGestureHandler
+                enabled={!mob.id || mob.id === id}
                 onGestureEvent={this.onGestureEvent}
                 onHandlerStateChange={this.onHandlerStateChange}
             >
@@ -117,22 +121,21 @@ const styles = StyleSheet.create({
     device: {
         zIndex: 1,
         borderWidth: 2,
-        borderColor: '#000',
+        borderColor: 'transparent',
         margin: 5,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
+        backgroundColor: '#fff',
     },
     deviceDragging: {
         zIndex: 100,
         borderWidth: 5,
         borderColor: '#e91e63',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
     },
     deviceDroppable: {
         borderWidth: 2,
         borderColor: '#008a12',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
     },
     deviceLabel: {
         fontSize: 24,

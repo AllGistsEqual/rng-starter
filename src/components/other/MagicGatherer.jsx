@@ -3,6 +3,7 @@ import React, {
     useEffect,
     useRef,
 } from 'react'
+import { Text } from 'react-native'
 import GtmBoard from './GtmBoard'
 import GtmToolbox from './GtmToolbox'
 import { getIntFromDevice } from '../../data/devices'
@@ -46,7 +47,15 @@ const MagicGatherer = () => {
         refBoard.current = board
     }, [mob, board])
 
-    const calculateNewMob = ({
+    const registerNewMob = (id) => {
+        setMob(mob.id
+            ? mob
+            : {
+                ...initialMob,
+                id,
+            })
+    }
+    const calculateMob = ({
         id, isDroppable, x, y,
     }) => {
         setMob({
@@ -58,19 +67,25 @@ const MagicGatherer = () => {
         })
     }
 
+    const handleDragStart = (id, event) => {
+        registerNewMob(id)
+    }
+
     const handleDrag = (id, event) => {
         const { nativeEvent: { absoluteX: x, absoluteY: y } } = event
         const isDroppable = isPositionWithinArea({ x, y }, refBoard.current)
-        calculateNewMob({
+        calculateMob({
             id, isDroppable, x, y,
         })
     }
 
     const handleDrop = (id, event) => {
         const { nativeEvent: { absoluteX: x, absoluteY: y } } = event
-        const tileValue = getIntFromDevice(id)
-        console.log('tileValue', tileValue)
-        setDrops([{ x, y, tileValue }, ...drops])
+        const isDroppable = isPositionWithinArea({ x, y }, refBoard.current)
+        if (isDroppable) {
+            const tileValue = getIntFromDevice(id)
+            setDrops([{ x, y, tileValue }, ...drops])
+        }
         setMob(initialMob)
     }
 
@@ -88,6 +103,14 @@ const MagicGatherer = () => {
 
     return (
         <>
+            <Text style={{
+                fontSize: 24,
+                fontWeight: 'bold',
+                color: '#ff7100',
+                marginBottom: 20,
+            }}>
+                alpha prototype v0.0.7
+            </Text>
             <GtmBoard
                 config={config}
                 reportChange={adjustBoard}
@@ -97,6 +120,7 @@ const MagicGatherer = () => {
             />
             <GtmToolbox
                 config={config}
+                handleDragStart={handleDragStart}
                 handleDrag={handleDrag}
                 handleDrop={handleDrop}
                 mob={mob}

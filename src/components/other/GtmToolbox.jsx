@@ -37,6 +37,7 @@ const deviceList = [
 
 const GtmToolbox = ({
     config,
+    handleDragStart,
     handleDrag,
     handleDrop,
     mob,
@@ -54,6 +55,7 @@ const GtmToolbox = ({
                     id={id}
                     width={tileWidth}
                     height={tileHeight}
+                    handleDragStart={handleDragStart}
                     handleDrag={handleDrag}
                     handleDrop={handleDrop}
                     mob={mob}
@@ -67,6 +69,7 @@ const GtmToolbox = ({
 
 GtmToolbox.propTypes = {
     config: PropTypes.object.isRequired,
+    handleDragStart: PropTypes.func.isRequired,
     handleDrag: PropTypes.func.isRequired,
     handleDrop: PropTypes.func.isRequired,
     mob: PropTypes.object.isRequired,

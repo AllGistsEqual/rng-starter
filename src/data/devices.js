@@ -1,6 +1,6 @@
 import { getIntFromValues, getMaskSums, getValuesFromInt } from '../utils/bitMask'
 
-const deviceTypes = {
+export const deviceTypes = {
     tile: {
         id: 'tile',
         key: 0,
@@ -44,13 +44,13 @@ const deviceTypeMap = {
 
 export const getDeviceTypeByKey = (key) => deviceTypes[deviceTypeMap[key]]
 
-const deviceData = {
+export const deviceData = {
     empty: {
         id: 'empty',
         key: 0,
         type: deviceTypes.tile.key,
         label: 'empty tile',
-        asset: '[   ]',
+        asset: '',
         color: '#ccc',
         description: 'An empty tile...',
     },
@@ -60,7 +60,7 @@ const deviceData = {
         type: deviceTypes.source.key,
         label: 'Source Emitter',
         asset: 'src',
-        color: '#f62dff',
+        color: 'rgba(246,45,255,0.48)',
         description: 'An Energy Source creates basic elemental energy by consuming source energy and outputting the selected element. An Energy Source can always only output one type of energy and only pure basic energy types.',
     },
     device_mixer: {
@@ -69,7 +69,7 @@ const deviceData = {
         type: deviceTypes.transformation.key,
         label: 'Energy Mixer',
         asset: 'mix',
-        color: '#1b5e7a',
+        color: '#6897bb',
         description: 'Energy Mixers can combine two types of energy into a joined energy type. There are different cycles that allow different  combinations and the energy mixer needs to be chosen accordingly (either separate devices or a setting on the device). Depending on the type of mix the amounts of channeled energy vary. The first element is always used in a proportion of 3 main to 2 sub element units.',
     },
     device_splitter: {

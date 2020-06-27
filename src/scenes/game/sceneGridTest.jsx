@@ -16,13 +16,6 @@ const SceneGridTest = ({ navigation }) => (
                 gridCols={gridCols}
                 gridRows={gridRows}
             />
-
-            <IconButton
-                icon="❌"
-                size={30}
-                customStyles={styles.buttonExit}
-                onPress={() => navigation.navigate('Home')}
-            />
         </View>
     </BackgroundPage>
 )

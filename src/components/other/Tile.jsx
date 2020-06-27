@@ -7,11 +7,16 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import DEVICES, { getDeviceByKey, getDeviceFromInt } from '../../data/devices'
+import {
+    Source,
+    Mixer,
+    Extractor,
+    Line,
+} from './devices'
 
 const initialTile = {
     id: 'empty',
-    label: '',
-    color: '#ccc',
+    label: undefined,
 }
 
 const Tile = (props) => {
@@ -31,12 +36,18 @@ const Tile = (props) => {
         const {
             id,
             asset,
-            color,
         } = getDeviceByKey(key)
+        let label
+        switch (asset) {
+            case ('src'): { label = <Source />; break }
+            case ('mix'): { label = <Mixer />; break }
+            case ('ext'): { label = <Extractor />; break }
+            case ('lin'): { label = <Line />; break }
+            default: { label = undefined}
+        }
         setTileContent({
             id,
-            label: asset,
-            color,
+            label,
         })
     }, [tile])
 
@@ -67,11 +78,11 @@ const Tile = (props) => {
                     {
                         backgroundColor: (hover && tileContent.id === 'empty')
                             ? 'green'
-                            : tileContent.color,
+                            : 'transparent',
                     },
                 ]}
                 >
-                    <Text>{tileContent.label}</Text>
+                    {tileContent.label}
                 </View>
             </TouchableWithoutFeedback>
         </View>
