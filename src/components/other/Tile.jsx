@@ -6,6 +6,7 @@ import {
     View,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import DEVICES, { getDeviceByKey, getDeviceFromInt } from '../../data/devices'
 
 const initialTile = {
     id: 'empty',
@@ -18,53 +19,25 @@ const Tile = (props) => {
         tile,
         x,
         y,
+        hover,
         width,
         height,
-        hover,
     } = props
 
     const [tileContent, setTileContent] = useState(initialTile)
 
     useEffect(() => {
-        // Update the document title using the browser API
-        switch (tile) {
-            case (1): {
-                setTileContent({
-                    id: 'tb_board_source',
-                    label: '[S]',
-                    color: '#f62dff',
-                })
-                break
-            }
-            case (2): {
-                setTileContent({
-                    id: 'tb_board_mixer',
-                    label: '[M]',
-                    color: '#1b5e7a',
-                })
-                break
-            }
-            case (3): {
-                setTileContent({
-                    id: 'tb_board_exporter',
-                    label: '[X]',
-                    color: '#24ffc0',
-                })
-                break
-            }
-            case (4): {
-                setTileContent({
-                    id: 'tb_board_equaliser',
-                    label: '[E]',
-                    color: '#ffbb15',
-                })
-                break
-            }
-
-            default: {
-                setTileContent(initialTile)
-            }
-        }
+        const { key } = getDeviceFromInt(tile)
+        const {
+            id,
+            asset,
+            color,
+        } = getDeviceByKey(key)
+        setTileContent({
+            id,
+            label: asset,
+            color,
+        })
     }, [tile])
 
     function handlePress() {}

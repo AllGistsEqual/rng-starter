@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, StyleSheet, Text } from 'react-native'
+import { Animated, StyleSheet } from 'react-native'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 import PropTypes from 'prop-types'
 
@@ -9,28 +9,17 @@ export default class DraggableBox extends Component {
         this.translateX = new Animated.Value(0)
         this.translateY = new Animated.Value(0)
         this.lastOffset = { x: 0, y: 0 }
-        this.onGestureEvent = Animated.event(
-            [
-                {
-                    nativeEvent: {
-                        translationX: this.translateX,
-                        translationY: this.translateY,
-                    },
-                },
-            ],
-            {
-                listener: (event) => {
-                    props.handleDrag(props.id, event)
-                },
-            },
-            {
-                useNativeDriver: true,
-            },
-        )
-    }
 
-    onHandlerStateChange = (event) => {
-        if (event.nativeEvent.oldState === State.ACTIVE) {
+        this.dragInitHandler = (event) => {}
+
+        this.dragStartHandler = (event) => {}
+
+        this.dragMoveHandler = (event) => {
+            const { handleDrag, id } = this.props
+            handleDrag(id, event)
+        }
+
+        this.dragStopHandler = (event) => {
             const { handleDrop, id } = this.props
             handleDrop(id, event)
             this.translateX.setOffset(this.lastOffset.x)
@@ -42,16 +31,38 @@ export default class DraggableBox extends Component {
             this.lastOffset.y += event.nativeEvent.translationY
             */
         }
-    };
+
+        this.onGestureEvent = Animated.event(
+            [
+                {
+                    nativeEvent: {
+                        translationX: this.translateX,
+                        translationY: this.translateY,
+                    },
+                },
+            ],
+            {
+                listener: (event) => { this.dragMoveHandler(event) },
+            },
+            {
+                useNativeDriver: true,
+            },
+        )
+    }
+
+    onHandlerStateChange = (event) => {
+        if (event.nativeEvent.oldState === State.UNDETERMINED) { this.dragInitHandler(event) }
+        if (event.nativeEvent.oldState === State.BEGAN) { this.dragStartHandler(event) }
+        if (event.nativeEvent.oldState === State.ACTIVE) { this.dragStopHandler(event) }
+    }
 
     render() {
         const {
             id,
             width,
             height,
-            color,
-            label,
             mob,
+            children,
         } = this.props
         return (
             <PanGestureHandler
@@ -73,7 +84,6 @@ export default class DraggableBox extends Component {
                         {
                             width,
                             height,
-                            backgroundColor: color,
                             transform: [
                                 { translateX: this.translateX },
                                 { translateY: this.translateY },
@@ -82,9 +92,7 @@ export default class DraggableBox extends Component {
 
                     ]}
                 >
-                    <Text style={styles.deviceLabel}>
-                        {label}
-                    </Text>
+                    {children}
                 </Animated.View>
             </PanGestureHandler>
         )
@@ -95,8 +103,6 @@ DraggableBox.propTypes = {
     id: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    label: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
     handleDrag: PropTypes.func.isRequired,
     handleDrop: PropTypes.func.isRequired,
     mob: PropTypes.object.isRequired,

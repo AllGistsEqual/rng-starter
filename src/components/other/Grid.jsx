@@ -9,7 +9,7 @@ export const createBoard = (cols, rows, content = 0) => {
 export const gridPainter = (grid) => grid
     .map((col, colIndex) => col
         .map(
-            (cell, rowIndex) => ({ cell, x: colIndex, y: rowIndex })
+            (tile, rowIndex) => ({ tile, x: colIndex, y: rowIndex })
         ))
     .flat()
 
@@ -20,8 +20,8 @@ export const getValueOfCell = (grid, x, y) => grid[x][y]
 export const updateBoard = (grid, changedCells) => {
     const newGrid = copyGrid(grid)
 
-    changedCells.forEach(({ x, y, cell }) => {
-        newGrid[x][y] = cell
+    changedCells.forEach(({ x, y, tile }) => {
+        newGrid[x][y] = tile
     })
 
     return newGrid

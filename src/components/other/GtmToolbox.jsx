@@ -5,40 +5,68 @@ import {
     View,
 } from 'react-native'
 import DraggableBox from './DraggableBox'
+import {
+    Source,
+    Mixer,
+    Extractor,
+    Line,
+} from './devices'
 
 const deviceList = [
-    { label: '[S]', color: '#f62dff', id: 'tb_drag_source' },
-    { label: '[M]', color: '#1b5e7a', id: 'tb_drag_mixer' },
-    { label: '[X]', color: '#24ffc0', id: 'tb_drag_exporter' },
-    { label: '[E]', color: '#ffbb15', id: 'tb_drag_equaliser' },
+    {
+        id: 'device_source',
+        device: <Source />,
+        count: '2',
+    },
+    {
+        id: 'device_mixer',
+        device: <Mixer />,
+        count: '1',
+    },
+    {
+        id: 'device_extractor',
+        device: <Extractor />,
+        count: '3',
+    },
+    {
+        id: 'device_line',
+        device: <Line />,
+        count: '23',
+    },
 ]
 
 const GtmToolbox = ({
-    cellWidth,
-    cellHeight,
+    config,
     handleDrag,
     handleDrop,
     mob,
-}) => (
-    <View style={styles.background}>
-        {deviceList.map(({ label, color, id }) => (
-            <DraggableBox
-                key={id}
-                id={id}
-                label={label}
-                color={color}
-                width={cellWidth}
-                height={cellHeight}
-                handleDrag={handleDrag}
-                handleDrop={handleDrop}
-                mob={mob}
-            />
-        ))}
-    </View>
-)
+}) => {
+    const {
+        tileWidth,
+        tileHeight,
+    } = config
+
+    return (
+        <View style={styles.background}>
+            {deviceList.map(({ id, device }) => (
+                <DraggableBox
+                    key={id}
+                    id={id}
+                    width={tileWidth}
+                    height={tileHeight}
+                    handleDrag={handleDrag}
+                    handleDrop={handleDrop}
+                    mob={mob}
+                >
+                    {device}
+                </DraggableBox>
+            ))}
+        </View>
+    )
+}
+
 GtmToolbox.propTypes = {
-    cellWidth: PropTypes.number.isRequired,
-    cellHeight: PropTypes.number.isRequired,
+    config: PropTypes.object.isRequired,
     handleDrag: PropTypes.func.isRequired,
     handleDrop: PropTypes.func.isRequired,
     mob: PropTypes.object.isRequired,

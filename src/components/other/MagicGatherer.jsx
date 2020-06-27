@@ -1,11 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {
+    useState,
+    useEffect,
+    useRef,
+} from 'react'
 import GtmBoard from './GtmBoard'
 import GtmToolbox from './GtmToolbox'
+import { getIntFromDevice } from '../../data/devices'
 
-const cellWidth = 50
-const cellHeight = 50
-const gridCols = 6
-const gridRows = 8
+const config = {
+    tileWidth: 50,
+    tileHeight: 50,
+    gridCols: 6,
+    gridRows: 8,
+}
 
 const initialMob = {
     id: null,
@@ -59,6 +66,14 @@ const MagicGatherer = () => {
         })
     }
 
+    const handleDrop = (id, event) => {
+        const { nativeEvent: { absoluteX: x, absoluteY: y } } = event
+        const tileValue = getIntFromDevice(id)
+        console.log('tileValue', tileValue)
+        setDrops([{ x, y, tileValue }, ...drops])
+        setMob(initialMob)
+    }
+
     const adjustBoard = ({ nativeEvent }) => {
         const {
             x, y, width, height,
@@ -71,26 +86,17 @@ const MagicGatherer = () => {
         })
     }
 
-    const handleDrop = (id, event) => {
-        const { nativeEvent: { absoluteX: x, absoluteY: y } } = event
-        setDrops([{ x, y, id }, ...drops])
-        setMob(initialMob)
-    }
     return (
         <>
             <GtmBoard
-                gridCols={gridCols}
-                gridRows={gridRows}
-                cellWidth={cellWidth}
-                cellHeight={cellHeight}
+                config={config}
                 reportChange={adjustBoard}
                 mob={mob}
                 drops={drops}
                 position={board}
             />
             <GtmToolbox
-                cellWidth={cellWidth}
-                cellHeight={cellHeight}
+                config={config}
                 handleDrag={handleDrag}
                 handleDrop={handleDrop}
                 mob={mob}
