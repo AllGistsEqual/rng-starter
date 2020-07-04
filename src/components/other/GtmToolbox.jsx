@@ -57,25 +57,25 @@ const deviceList = [
 const lineList = [
     {
         id: deviceData.device_line.id,
-        device: <Line />,
+        device: <Line orientation={1} />,
         orientation: 1, // [1,2] // Large Straight
         count: '-1',
     },
     {
         id: deviceData.device_line.id,
-        device: <Line />,
+        device: <Line orientation={1} />,
         orientation: 3, // [3,4,5,6]  // Large Corner
         count: '-1',
     },
     {
         id: deviceData.device_line.id,
-        device: <Line />,
+        device: <Line orientation={1} />,
         orientation: 9, // [9,10] // Double Straight
         count: '-1',
     },
     {
         id: deviceData.device_line.id,
-        device: <Line />,
+        device: <Line orientation={1} />,
         orientation: 11, // [11,12,13,14] // Double Corner
         count: '-1',
     },

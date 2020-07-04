@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import {
-    TouchableWithoutFeedback,
     StyleSheet,
     View,
 } from 'react-native'
@@ -24,11 +23,7 @@ const initialTile = {
 const Tile = (props) => {
     const {
         tile,
-        x,
-        y,
         hover,
-        width,
-        height,
     } = props
 
     const [tileContent, setTileContent] = useState(initialTile)
@@ -76,50 +71,22 @@ const Tile = (props) => {
         })
     }, [tile])
 
-    function handlePress() {}
-
-    function handleLongPress() {}
-
-    const tileFlexStyles = {
-        width,
-        height,
-        left: width * x,
-        top: height * y,
-    }
-
     return (
-        <View style={{
-            ...styles.tileWrapper,
-            ...tileFlexStyles,
-        }}
+        <View style={[
+            styles.tileDefault,
+            {
+                backgroundColor: (hover && tileContent.id === 'empty')
+                    ? 'green'
+                    : 'transparent',
+            },
+        ]}
         >
-            <TouchableWithoutFeedback
-                style={{ width: '100%', height: '100%' }}
-                onPress={() => handlePress()}
-                onLongPress={() => handleLongPress()}
-            >
-                <View style={[
-                    styles.tileDefault,
-                    {
-                        backgroundColor: (hover && tileContent.id === 'empty')
-                            ? 'green'
-                            : 'transparent',
-                    },
-                ]}
-                >
-                    {tileContent.label}
-                </View>
-            </TouchableWithoutFeedback>
+            {tileContent.label}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    tileWrapper: {
-        position: 'absolute',
-        borderWidth: 1,
-        borderColor: '#aaa',
-    },
     tileDefault: {
         width: '100%',
         height: '100%',
@@ -130,10 +97,6 @@ const styles = StyleSheet.create({
 
 Tile.propTypes = {
     tile: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
     hover: PropTypes.bool.isRequired,
 }
 

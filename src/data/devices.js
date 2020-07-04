@@ -158,4 +158,38 @@ export const getIntFromDevice = (id, orientation = 0, state = 0) => {
     return getIntFromValues([type, key, orientation, state], deviceBitSums)
 }
 
+export const rotateDevice = (tile) => {
+    const {
+        type, key, orientation, status,
+    } = getDeviceFromInt(tile)
+    let newOrientation = orientation
+    switch (type) {
+        case (1):
+        case (2):
+        case (3):
+        case (4): {
+            newOrientation = orientation + 1 > 4 ? 1 : orientation + 1
+            break
+        }
+        case (5): {
+            switch (orientation) {
+                case (1): { newOrientation = 2; break }
+                case (2): { newOrientation = 1; break }
+                case (3): { newOrientation = 4; break }
+                case (4): { newOrientation = 5; break }
+                case (5): { newOrientation = 6; break }
+                case (6): { newOrientation = 3; break }
+                case (9): { newOrientation = 10; break }
+                case (10): { newOrientation = 9; break }
+                case (11): { newOrientation = 12; break }
+                case (12): { newOrientation = 13; break }
+                case (13): { newOrientation = 14; break }
+                case (14): { newOrientation = 11; break }
+            }
+            break
+        }
+    }
+    return getIntFromDevice(getDeviceByKey(key).id, newOrientation, status)
+}
+
 export default deviceData

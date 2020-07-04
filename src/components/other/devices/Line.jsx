@@ -55,18 +55,20 @@ const Line = ({
     }, [orientation])
 
     return (
-        <View style={[
-            styles.device,
-            rotationStyle,
-        ]}
-        >
+        <View style={styles.device}>
             <Image
                 source={assetLine[`${type}Bottom`]}
-                style={styles.asset}
+                style={[
+                    styles.asset,
+                    rotationStyle,
+                ]}
             />
             <Image
                 source={assetLine[`${type}Top`]}
-                style={styles.assetTop}
+                style={[
+                    styles.assetTop,
+                    rotationStyle,
+                ]}
             />
         </View>
     )

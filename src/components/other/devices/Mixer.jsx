@@ -20,14 +20,13 @@ const Mixer = ({ orientation }) => {
     }, [orientation])
 
     return (
-        <View style={[
-            styles.device,
-            rotationStyle,
-        ]}
-        >
+        <View style={styles.device}>
             <Image
                 source={assetImage}
-                style={styles.asset}
+                style={[
+                    styles.asset,
+                    rotationStyle,
+                ]}
             />
         </View>
     )
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ccc',
+        backgroundColor: '#fff',
     },
     asset: {
         width: 50,

@@ -20,14 +20,13 @@ const Merger = ({ orientation }) => {
     }, [orientation])
 
     return (
-        <View style={[
-            styles.device,
-            rotationStyle,
-        ]}
-        >
+        <View style={styles.device}>
             <Image
                 source={assetImage}
-                style={styles.asset}
+                style={[
+                    styles.asset,
+                    rotationStyle,
+                ]}
             />
         </View>
     )

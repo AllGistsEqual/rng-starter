@@ -7,7 +7,9 @@ import {
     getValueOfCell,
     updateBoard,
 } from './Grid'
+import InteractiveTileWrapper from './InteractiveTileWrapper'
 import Tile from './Tile'
+import { rotateDevice } from '../../data/devices'
 
 const initialHover = {
     col: null,
@@ -64,8 +66,24 @@ const GtmBoard = ({
         setHoverTile({ row, col })
     }, [mob])
 
-    useEffect(() => {
-    }, [board])
+    const touchHandler = (tile, col, row) => {}
+
+    const doubleTouchHandler = (tile, col, row) => {
+        const newTile = rotateDevice(tile)
+        setBoard(updateBoard(board, [{
+            x: col,
+            y: row,
+            tile: newTile,
+        }]))
+    }
+
+    const longTouchHandler = (tile, col, row) => {
+        setBoard(updateBoard(board, [{
+            x: col,
+            y: row,
+            tile: 0,
+        }]))
+    }
 
     return (
         <View
@@ -84,15 +102,24 @@ const GtmBoard = ({
             }) => {
                 const { row, col } = hoverTile
                 return (
-                    <Tile
+                    <InteractiveTileWrapper
                         key={`tile_${x}_${y}`}
                         tile={tile}
                         x={x}
                         y={y}
-                        hover={(col === x && row === y)}
                         width={tileWidth}
                         height={tileHeight}
-                    />
+                        touchHandler={touchHandler}
+                        doubleTouchHandler={doubleTouchHandler}
+                        longTouchHandler={longTouchHandler}
+                    >
+                        <Tile
+                            tile={tile}
+                            x={x}
+                            y={y}
+                            hover={(col === x && row === y)}
+                        />
+                    </InteractiveTileWrapper>
                 )
             })}
         </View>
