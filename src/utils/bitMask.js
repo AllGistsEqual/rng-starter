@@ -25,6 +25,19 @@ export const getValuesFromInt = (int, masks, maskSums) => {
 }
 
 /*
+
+//  0  =>    1
+//  1  =>    2
+//  2  =>    4
+//  3  =>    8
+//  4  =>   16
+//  5  =>   32
+//  6  =>   64
+//  7  =>  128
+//  8  =>  256
+//  9  =>  512
+// 10  => 1024
+
 const values = [
     2,  // type            or T
     61, // key             or K

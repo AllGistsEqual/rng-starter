@@ -1,15 +1,13 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import PropTypes from 'prop-types'
 import BackgroundPage from '../../components/global/layout/BackgroundPage'
-import IconButton from '../../components/global/ui/IconButton'
 import backgroundImage from '../../../assets/bg_abstract_02.jpg'
 import MagicGatherer from '../../components/other/MagicGatherer'
 
 const gridCols = 5
 const gridRows = 5
 
-const SceneGridTest = ({ navigation }) => (
+const SceneGridTest = () => (
     <BackgroundPage background={backgroundImage}>
         <View style={styles.contentBox}>
             <MagicGatherer
@@ -34,9 +32,5 @@ const styles = StyleSheet.create({
         right: 15,
     },
 })
-
-SceneGridTest.propTypes = {
-    navigation: PropTypes.object.isRequired,
-}
 
 export default SceneGridTest

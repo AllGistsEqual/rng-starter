@@ -5,10 +5,9 @@ import {
     Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import assetImage from '../../../../assets/gtm/device_splitter_0.png'
+import assetImage from '../../../../assets/gtm/device_merger_0.png'
 
-const Splitter = (props) => {
-    const { orientation } = props
+const Merger = ({ orientation }) => {
     const [rotationStyle, setRotationStyle] = useState({})
 
     useEffect(() => {
@@ -34,7 +33,7 @@ const Splitter = (props) => {
     )
 }
 
-Splitter.propTypes = {
+Merger.propTypes = {
     orientation: PropTypes.number.isRequired,
 }
 
@@ -52,4 +51,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Splitter
+export default Merger

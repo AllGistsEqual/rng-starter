@@ -2,7 +2,7 @@
   "expo": {
     "name": "GtM-alpha",
     "slug": "gtm-alpha",
-    "version": "0.2.0",
+    "version": "0.0.7",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -24,7 +24,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.allbitsequal.gatherthemagic",
+      "buildNumber": "0.0.7",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.allbitsequal.gatherthemagic",
+      "versionCode": 7
     },
     "description": "This is a small demo project for a pre-alpha prototype of GtM"
   }

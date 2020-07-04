@@ -1,29 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
-    Text,
     View,
+    Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import DEVICES from '../../../data/devices'
+import assetImage from '../../../../assets/gtm/device_source_0.png'
+import assetImageTop from '../../../../assets/gtm/device_source_1.png'
 
-const Source = (props) => {
-    const {
-        output,
-        orientation,
-        status,
-    } = props
-    const { asset, color } = DEVICES.device_source
+const Source = ({ orientation }) => {
+    const [rotationStyle, setRotationStyle] = useState({})
+
+    useEffect(() => {
+        switch (orientation) {
+            case (1): { setRotationStyle({}); break }
+            case (2): { setRotationStyle({ transform: [{ rotate: '90deg' }] }); break }
+            case (3): { setRotationStyle({ transform: [{ rotate: '180deg' }] }); break }
+            case (4): { setRotationStyle({ transform: [{ rotate: '270deg' }] }); break }
+        }
+    }, [orientation])
 
     return (
-        <View style={[
-            styles.device,
-            { backgroundColor: color },
-        ]}
-        >
-            <Text style={styles.label}>{asset}</Text>
+        <View style={styles.device}>
+            <Image
+                source={assetImage}
+                style={[
+                    styles.asset,
+                    rotationStyle,
+                ]}
+            />
+            <Image
+                source={assetImageTop}
+                style={styles.assetTop}
+            />
         </View>
     )
+}
+
+Source.propTypes = {
+    orientation: PropTypes.number.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -32,12 +47,17 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#ccc',
     },
-    label: {
-        fontSize: 24,
+    asset: {
+        width: 50,
+        height: 50,
+    },
+    assetTop: {
+        position: 'absolute',
+        width: 50,
+        height: 50,
     },
 })
-
-Source.propTypes = {}
 
 export default Source

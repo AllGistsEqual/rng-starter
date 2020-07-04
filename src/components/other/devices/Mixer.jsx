@@ -1,30 +1,40 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
-    Text,
     View,
+    Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import DEVICES from '../../../data/devices'
+import assetImage from '../../../../assets/gtm/device_mixer_0.png'
 
-const Mixer = (props) => {
-    const {
-        input,
-        output,
-        orientation,
-        status,
-    } = props
-    const { asset, color } = DEVICES.device_mixer
+const Mixer = ({ orientation }) => {
+    const [rotationStyle, setRotationStyle] = useState({})
+
+    useEffect(() => {
+        switch (orientation) {
+            case (1): { setRotationStyle({}); break }
+            case (2): { setRotationStyle({ transform: [{ rotate: '90deg' }] }); break }
+            case (3): { setRotationStyle({ transform: [{ rotate: '180deg' }] }); break }
+            case (4): { setRotationStyle({ transform: [{ rotate: '270deg' }] }); break }
+        }
+    }, [orientation])
 
     return (
         <View style={[
             styles.device,
-            { backgroundColor: color },
+            rotationStyle,
         ]}
         >
-            <Text style={styles.label}>{asset}</Text>
+            <Image
+                source={assetImage}
+                style={styles.asset}
+            />
         </View>
     )
+}
+
+Mixer.propTypes = {
+    orientation: PropTypes.number.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -33,12 +43,12 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#ccc',
     },
-    label: {
-        fontSize: 24,
+    asset: {
+        width: 50,
+        height: 50,
     },
 })
-
-Mixer.propTypes = {}
 
 export default Mixer

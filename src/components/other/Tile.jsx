@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react'
 import {
     TouchableWithoutFeedback,
     StyleSheet,
-    Text,
     View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import DEVICES, { getDeviceByKey, getDeviceFromInt } from '../../data/devices'
+import { deviceData, getDeviceByKey, getDeviceFromInt } from '../../data/devices'
 import {
     Source,
+    Splitter,
+    Merger,
     Mixer,
     Extractor,
+    Imbuer,
     Line,
 } from './devices'
 
@@ -32,18 +34,41 @@ const Tile = (props) => {
     const [tileContent, setTileContent] = useState(initialTile)
 
     useEffect(() => {
-        const { key } = getDeviceFromInt(tile)
+        const { key, orientation } = getDeviceFromInt(tile)
         const {
             id,
-            asset,
         } = getDeviceByKey(key)
         let label
-        switch (asset) {
-            case ('src'): { label = <Source />; break }
-            case ('mix'): { label = <Mixer />; break }
-            case ('ext'): { label = <Extractor />; break }
-            case ('lin'): { label = <Line />; break }
-            default: { label = undefined}
+        switch (id) {
+            case (deviceData.device_source.id): {
+                label = <Source orientation={orientation} />
+                break
+            }
+            case (deviceData.device_splitter.id): {
+                label = <Splitter orientation={orientation} />
+                break
+            }
+            case (deviceData.device_merger.id): {
+                label = <Merger orientation={orientation} />
+                break
+            }
+            case (deviceData.device_mixer.id): {
+                label = <Mixer orientation={orientation} />
+                break
+            }
+            case (deviceData.device_extractor.id): {
+                label = <Extractor orientation={orientation} />
+                break
+            }
+            case (deviceData.device_imbuer.id): {
+                label = <Imbuer orientation={orientation} />
+                break
+            }
+            case (deviceData.device_line.id): {
+                label = <Line orientation={orientation} />
+                break
+            }
+            default: { label = undefined }
         }
         setTileContent({
             id,

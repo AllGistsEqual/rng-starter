@@ -7,31 +7,77 @@ import {
 import DraggableBox from './DraggableBox'
 import {
     Source,
+    Splitter,
+    Merger,
     Mixer,
     Extractor,
+    Imbuer,
     Line,
 } from './devices'
+import { deviceData } from '../../data/devices'
 
 const deviceList = [
     {
-        id: 'device_source',
-        device: <Source />,
+        id: deviceData.device_source.id,
+        device: <Source orientation={1} />,
+        orientation: 1, // [1,2,3,4]
         count: '2',
     },
     {
-        id: 'device_mixer',
-        device: <Mixer />,
+        id: deviceData.device_splitter.id,
+        device: <Splitter orientation={1} />,
+        orientation: 1, // [1,2,3,4]
         count: '1',
     },
     {
-        id: 'device_extractor',
-        device: <Extractor />,
+        id: deviceData.device_merger.id,
+        device: <Merger orientation={1} />,
+        orientation: 1, // [1,2,3,4]
+        count: '1',
+    },
+    {
+        id: deviceData.device_mixer.id,
+        device: <Mixer orientation={1} />,
+        orientation: 1, // [1,2,3,4]
+        count: '1',
+    },
+    {
+        id: deviceData.device_extractor.id,
+        device: <Extractor orientation={1} />,
+        orientation: 1, // [1,2,3,4]
         count: '3',
     },
     {
-        id: 'device_line',
+        id: deviceData.device_imbuer.id,
+        device: <Imbuer orientation={1} />,
+        orientation: 1, // [1,2,3,4]
+        count: '1',
+    },
+]
+const lineList = [
+    {
+        id: deviceData.device_line.id,
         device: <Line />,
-        count: '23',
+        orientation: 1, // [1,2] // Large Straight
+        count: '-1',
+    },
+    {
+        id: deviceData.device_line.id,
+        device: <Line />,
+        orientation: 3, // [3,4,5,6]  // Large Corner
+        count: '-1',
+    },
+    {
+        id: deviceData.device_line.id,
+        device: <Line />,
+        orientation: 9, // [9,10] // Double Straight
+        count: '-1',
+    },
+    {
+        id: deviceData.device_line.id,
+        device: <Line />,
+        orientation: 11, // [11,12,13,14] // Double Corner
+        count: '-1',
     },
 ]
 
@@ -48,22 +94,44 @@ const GtmToolbox = ({
     } = config
 
     return (
-        <View style={styles.background}>
-            {deviceList.map(({ id, device }) => (
-                <DraggableBox
-                    key={id}
-                    id={id}
-                    width={tileWidth}
-                    height={tileHeight}
-                    handleDragStart={handleDragStart}
-                    handleDrag={handleDrag}
-                    handleDrop={handleDrop}
-                    mob={mob}
-                >
-                    {device}
-                </DraggableBox>
-            ))}
-        </View>
+        <>
+            <View style={styles.container}>
+                <View style={styles.background}>
+                    {deviceList.map(({ id, device, orientation }, index) => (
+                        <DraggableBox
+                            key={id}
+                            id={`${id}_${index}`}
+                            device={id}
+                            orientation={orientation}
+                            width={tileWidth}
+                            height={tileHeight}
+                            handleDragStart={handleDragStart}
+                            handleDrag={handleDrag}
+                            handleDrop={handleDrop}
+                            mob={mob}
+                        >
+                            {device}
+                        </DraggableBox>
+                    ))}
+                    {lineList.map(({ id, orientation }, index) => (
+                        <DraggableBox
+                            key={`${id}_${orientation}`}
+                            id={`${id}_${index}`}
+                            device={id}
+                            orientation={orientation}
+                            width={tileWidth}
+                            height={tileHeight}
+                            handleDragStart={handleDragStart}
+                            handleDrag={handleDrag}
+                            handleDrop={handleDrop}
+                            mob={mob}
+                        >
+                            <Line orientation={orientation} />
+                        </DraggableBox>
+                    ))}
+                </View>
+            </View>
+        </>
     )
 }
 
@@ -76,16 +144,25 @@ GtmToolbox.propTypes = {
 }
 
 const styles = StyleSheet.create({
-    background: {
+    container: {
         resizeMode: 'cover',
         justifyContent: 'center',
         backgroundColor: '#fff',
         position: 'relative',
         borderWidth: 2,
         width: '100%',
-        height: 120,
-        margin: 10,
+        margin: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+    background: {
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        position: 'relative',
+        width: '100%',
+        marginTop: 5,
         flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 })
 

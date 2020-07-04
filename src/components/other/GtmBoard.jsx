@@ -8,13 +8,6 @@ import {
     updateBoard,
 } from './Grid'
 import Tile from './Tile'
-import DEVICES from '../../data/devices'
-
-const borderWidth = 4
-
-const getBuildingFromId = (id) => {
-    const device = DEVICES[id].asset
-}
 
 const initialHover = {
     col: null,
@@ -23,6 +16,7 @@ const initialHover = {
 
 const GtmBoard = ({
     config,
+    preset,
     reportChange,
     mob,
     drops,
@@ -33,9 +27,15 @@ const GtmBoard = ({
         gridRows,
         tileWidth,
         tileHeight,
+        borderWidth,
     } = config
     const { top, left } = position
-    const [board, setBoard] = useState(createBoard(gridCols, gridRows))
+    const [board, setBoard] = useState(
+        updateBoard(
+            createBoard(gridCols, gridRows),
+            preset,
+        )
+    )
     const [hoverTile, setHoverTile] = useState(initialHover)
 
     useEffect(() => {
@@ -74,6 +74,7 @@ const GtmBoard = ({
                 ...styles.gridBackground,
                 width: gridCols * tileWidth + borderWidth * 2,
                 height: gridRows * tileHeight + borderWidth * 2,
+                borderWidth,
             }}
         >
             {gridPainter(board).map(({
@@ -100,6 +101,7 @@ const GtmBoard = ({
 
 GtmBoard.propTypes = {
     config: PropTypes.object.isRequired,
+    preset: PropTypes.array.isRequired,
     reportChange: PropTypes.func.isRequired,
     mob: PropTypes.object.isRequired,
     drops: PropTypes.array.isRequired,
@@ -112,7 +114,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#ccc',
         position: 'relative',
-        borderWidth,
     },
 })
 

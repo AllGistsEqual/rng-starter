@@ -5,10 +5,10 @@ import {
     Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import assetImage from '../../../../assets/gtm/device_splitter_0.png'
+import assetImage from '../../../../assets/gtm/device_imbuer_0.png'
+import assetImageTop from '../../../../assets/gtm/device_imbuer_1.png'
 
-const Splitter = (props) => {
-    const { orientation } = props
+const Imbuer = ({ orientation }) => {
     const [rotationStyle, setRotationStyle] = useState({})
 
     useEffect(() => {
@@ -21,20 +21,23 @@ const Splitter = (props) => {
     }, [orientation])
 
     return (
-        <View style={[
-            styles.device,
-            rotationStyle,
-        ]}
-        >
+        <View style={styles.device}>
             <Image
                 source={assetImage}
-                style={styles.asset}
+                style={[
+                    styles.asset,
+                    rotationStyle,
+                ]}
+            />
+            <Image
+                source={assetImageTop}
+                style={styles.assetTop}
             />
         </View>
     )
 }
 
-Splitter.propTypes = {
+Imbuer.propTypes = {
     orientation: PropTypes.number.isRequired,
 }
 
@@ -50,6 +53,11 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
     },
+    assetTop: {
+        position: 'absolute',
+        width: 50,
+        height: 50,
+    },
 })
 
-export default Splitter
+export default Imbuer

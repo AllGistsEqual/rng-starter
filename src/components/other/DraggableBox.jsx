@@ -11,20 +11,22 @@ export default class DraggableBox extends Component {
         this.lastOffset = { x: 0, y: 0 }
 
         this.dragInitHandler = () => {
-            const { handleDragStart, id } = this.props
-            handleDragStart(id)
+            const { handleDragStart, id, device } = this.props
+            handleDragStart(id, device)
         }
 
         this.dragStartHandler = () => {}
 
         this.dragMoveHandler = (event) => {
-            const { handleDrag, id } = this.props
-            handleDrag(id, event)
+            const { handleDrag, id, device } = this.props
+            handleDrag(id, device, event)
         }
 
         this.dragStopHandler = (event) => {
-            const { handleDrop, id } = this.props
-            handleDrop(id, event)
+            const {
+                handleDrop, id, device, orientation,
+            } = this.props
+            handleDrop(id, device, orientation, event)
             this.translateX.setOffset(this.lastOffset.x)
             this.translateX.setValue(0)
             this.translateY.setOffset(this.lastOffset.y)
@@ -86,8 +88,8 @@ export default class DraggableBox extends Component {
                             )
                             : {},
                         {
-                            width,
-                            height,
+                            width: width + 5,
+                            height: height + 5,
                             transform: [
                                 { translateX: this.translateX },
                                 { translateY: this.translateY },
@@ -105,11 +107,15 @@ export default class DraggableBox extends Component {
 
 DraggableBox.propTypes = {
     id: PropTypes.string.isRequired,
+    device: PropTypes.string.isRequired,
+    orientation: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+    handleDragStart: PropTypes.func.isRequired,
     handleDrag: PropTypes.func.isRequired,
     handleDrop: PropTypes.func.isRequired,
     mob: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -122,11 +128,10 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderWidth: 2,
         borderColor: 'transparent',
-        margin: 5,
+        margin: 0,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        backgroundColor: '#fff',
     },
     deviceDragging: {
         zIndex: 100,
