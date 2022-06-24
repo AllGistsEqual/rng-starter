@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../index'
 
-type UserStatus = 'init' | 'guest' | 'pending' | 'registered'
+type UserStatus = 'init' | 'guest' | 'pending' | 'registered'
 
 interface UserInfoState {
     name: string
@@ -20,7 +20,7 @@ export const userInfoSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        setUserInfo: (state, action: PayloadAction<{ name: string; id: number, status: UserStatus }>) => {
+        setUserInfo: (state, action: PayloadAction<{ name: string; id: number; status: UserStatus }>) => {
             const { name, id, status } = action.payload
             state.name = name
             state.id = id
