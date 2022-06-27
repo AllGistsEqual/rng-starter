@@ -1,7 +1,4 @@
-node_modules/**/*
-.expo/*
-.idea
-npm-debug.*
+# mobile
 *.jks
 *.p8
 *.p12
@@ -11,5 +8,22 @@ npm-debug.*
 web-build/
 web-report/
 
+# dependencies
+/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.pnp
+.pnp.js
+
+# frameworks
+.expo/*
+
 # macOS
 .DS_Store
+
+# ide
+.idea
+
+# generated / buggy stuff
+.eslintcache
