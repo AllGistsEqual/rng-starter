@@ -10,7 +10,8 @@
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --fix --ignore-path .gitignore .",
     "format": "prettier --write --config ./.prettierrc.json .",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
@@ -39,11 +40,21 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": ">=7",
+    "lint-staged": ">=10",
     "prettier": "^2.7.1",
     "typescript": "~4.3.5"
   },
   "resolutions": {
     "@types/react": "17.0.44"
   },
-  "private": true
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix"
+  }
 }
