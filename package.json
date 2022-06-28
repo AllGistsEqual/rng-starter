@@ -1,54 +1,60 @@
 {
   "name": "rng-starter",
-  "version": "0.2.0",
-  "license": "MIT",
-  "description": "React Native Starter is a project to kick-start prototypes and game jams.",
-  "author": {
-    "name": "Konrad Abe",
-    "email": "mail@allbitsequal.com",
-    "url": "https://allbitsequal.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AllBitsEqual/rng-starter.git"
-  },
+  "version": "0.3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint src/ --ext .js,.jsx || true",
-    "fix": "eslint --fix src/ --ext .js,.jsx || true",
-    "eject": "expo eject"
+    "lint": "eslint --ignore-path .gitignore .",
+    "fix": "eslint --fix --ignore-path .gitignore .",
+    "format": "prettier --write --config ./.prettierrc.json .",
+    "eject": "expo eject",
+    "prepare": "husky install"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "0.1.5",
-    "@react-navigation/native": "^5.0.3",
-    "@react-navigation/stack": "^5.0.5",
-    "expo": "~36.0.0",
-    "prop-types": "^15.7.2",
-    "react": "~16.9.0",
-    "react-dom": "~16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.5.0",
-    "react-native-reanimated": "~1.4.0",
-    "react-native-safe-area-context": "0.6.0",
-    "react-native-screens": "2.0.0-alpha.12",
-    "react-native-web": "~0.11.7",
-    "react-redux": "^7.1.3",
-    "redux": "^4.0.5",
+    "@react-native-async-storage/async-storage": "~1.17.3",
+    "@reduxjs/toolkit": "^1.8.2",
+    "expo": "~45.0.0",
+    "expo-status-bar": "~1.3.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-native": "0.68.2",
+    "react-native-web": "0.17.7",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "babel-eslint": "^10.0.3",
-    "babel-preset-expo": "~8.0.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.3.0"
+    "@babel/core": "^7.12.9",
+    "@types/react": "~17.0.44",
+    "@types/react-native": "~0.66.13",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": ">=7",
+    "lint-staged": ">=10",
+    "prettier": "^2.7.1",
+    "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "@types/react": "17.0.44"
+  },
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix"
   }
 }
