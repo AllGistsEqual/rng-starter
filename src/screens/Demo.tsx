@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { useReduxDispatch, useReduxSelector } from '../redux'
-import { getUserInfo, setUserInfo } from '../redux/ducks/userInfoSlice'
+
+import { useReduxDispatch, useReduxSelector } from '@Store'
+import { getUserInfo, setUserInfo } from '@Store/ducks/userInfoSlice'
 
 export default function Demo() {
     const dispatch = useReduxDispatch()

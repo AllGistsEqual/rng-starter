@@ -8,7 +8,15 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@Components/*": ["./src/components/*"],
+      "@Screens/*": ["./src/screens/*"],
+      "@Store": ["./src/redux/index.ts"],
+      "@Store/*": ["./src/redux/*"],
+      "@Assets/*": ["./assets/*"]
+    }
   },
-  "include": ["src"]
+  "exclude": ["node_modules"]
 }
