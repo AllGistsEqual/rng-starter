@@ -15,6 +15,7 @@
       "@Screens/*": ["./src/screens/*"],
       "@Store": ["./src/redux/index.ts"],
       "@Store/*": ["./src/redux/*"],
+      "@Routing/*": ["./src/routing/*"],
       "@Assets/*": ["./assets/*"]
     }
   },
