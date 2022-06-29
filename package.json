@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --fix --ignore-path .gitignore .",
-    "format": "prettier --write --config ./.prettierrc.json .",
+    "format": "prettier --write --config ./.prettierrc.json --ignore-path .gitignore .",
     "eject": "expo eject",
     "prepare": "husky install"
   },
